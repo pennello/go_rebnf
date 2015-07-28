@@ -1,0 +1,19 @@
+objinner = string ":" value .
+object = "{" [ objinner { "," objinner } ] "}" .
+
+array = "[" [ value { "," value } ] "]" .
+value = string | number | object | array | "true" | "false" | "null" .
+
+posdigit = "1" … "9" .
+digit = "0" | posdigit .
+
+hex = digit | "A" … "F" | "a" … "f" .
+uniesc = "u" hex hex hex hex .
+esc = "\\" ( "\"" | "\\" | "/" | "b" | "f" | "n" | "r" | "t" | uniesc ) .
+unichr = "a" … "z" | "A" … "Z" .
+string = "\"" { unichr | esc } "\"" .
+
+int = "0" | ( posdigit { digit } ) .
+frac = "." digit { digit } .
+exp = ( "e" | "E" ) [ "+" | "-" ] { digit } .
+number = [ "-" ] int [ frac ] [ exp ] .

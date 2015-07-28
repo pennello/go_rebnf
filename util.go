@@ -11,25 +11,27 @@ import (
 
 var ErrBadRange = errors.New("bad range")
 
-// ChooseInt chooses a random integer in [begin, end].
+// ChooseInt returns, as an int, a random integer in [begin, end] from
+// the default Source.  It panics if begin > end.
 func ChooseInt(begin, end int) int {
 	if begin > end {
-		panic(fmt.Sprintf("%d < %d", begin, end))
+		panic(fmt.Sprintf("invalid arguments to ChooseInt: begin %d > end %d", begin, end))
 	}
 	return begin + rand.Intn(end - begin + 1)
 }
 
-// ChooseRune chooses a random rune that is lexically includively
-// between begin and end.  Specifically, the output x satisfies begin <=
-// x <= end.
+// ChooseRune returns a random rune that is lexically and inclusively
+// between begin and end.  Specifically, the output x satisfies
+// begin <= x <= end.
 func ChooseRune(begin, end rune) rune {
 	return rune(ChooseInt(int(begin), int(end)))
 }
 
-// ChooseString chooses a random string that is lexically inclusively
-// between begin and end.  Specifically, the output x satisfies begin <=
-// x <= end.  If the begin and end strings don't contain the same number
-// of runes, the empty string is returned with an error.
+// ChooseString returns a random string that is lexically and
+// inclusively between begin and end.  Specifically, the output x
+// satisfies begin <= x <= end.  If the begin and end strings don't
+// contain the same number of runes, the empty string is returned with
+// ErrBadRange.
 func ChooseString(begin, end string) (string, error) {
 	br := []rune(begin)
 	er := []rune(end)

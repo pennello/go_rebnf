@@ -9,10 +9,6 @@ import (
 	"log"
 )
 
-// This code is extracted from golang.org/x/exp/ebnflint.
-// Unfortunately, it's not exported there, so we duplicate it here and
-// export it.
-
 // Markers around EBNF sections in .html files.
 var (
 	open  = []byte(`<pre class="ebnf">`)
@@ -22,6 +18,16 @@ var (
 // ExtractEBNF extracts the EBNF text from a file with the open and
 // close markers defined above.  E.g., the Go Programming Language
 // Specification HTML page.
+//
+// Grammar productions are grouped in boxes demarcated by the following
+// HTML elements.
+//
+//	<pre class="ebnf">
+//	</pre>
+//
+// ExtractEBNF is itself extracted from golang.org/x/exp/ebnflint.
+// Unfortunately, it's not exported there, so we duplicate it here and
+// export it.
 func ExtractEBNF(src []byte) []byte {
 	var buf bytes.Buffer
 
@@ -58,12 +64,21 @@ func ExtractEBNF(src []byte) []byte {
 	return buf.Bytes()
 }
 
-// CheckRead checks the input filename to see if it ends in
-// ".html" or, if not, then checks if an opening token is present.  If
-// either is true, then the source byte array is treated as an HTML
-// document and EBNF text is extracted according to opening and closing
-// tokens.  In that case, the extracted byte slice is returned instead
-// of the original.  Otherwise, the original byte slice is returned.
+// CheckRead checks the input filename to see if it ends in ".html" or,
+// if not, then checks if an opening token is present.  If either is
+// true, then the source byte array is treated as an HTML document and
+// EBNF text is extracted according to the following opening and closing
+// tokens.
+//
+//	<pre class="ebnf">
+//	</pre>
+//
+// In this case, the extracted byte slice is returned instead of the
+// original.  Otherwise, the original byte slice is returned.
+//
+// The logic in CheckRead is extracted from golang.org/x/exp/ebnflint.
+// Unfortunately, it's not exported there, so we duplicate it here and
+// export it.
 func CheckRead(filename string, src []byte) []byte {
 	if filepath.Ext(filename) == ".html"  || bytes.Index(src, open) >= 0 {
 		src = ExtractEBNF(src)

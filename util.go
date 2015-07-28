@@ -9,6 +9,8 @@ import (
 	"math/rand"
 )
 
+// ErrBadRange is returned by ChooseString when the input strings do not
+// contain the same number of runes.
 var ErrBadRange = errors.New("bad range")
 
 // ChooseInt returns, as an int, a random integer in [begin, end] from

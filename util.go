@@ -17,7 +17,7 @@ func ChooseInt(begin, end int) int {
 	if begin > end {
 		panic(fmt.Sprintf("invalid arguments to ChooseInt: begin %d > end %d", begin, end))
 	}
-	return begin + rand.Intn(end - begin + 1)
+	return begin + rand.Intn(end-begin+1)
 }
 
 // ChooseRune returns a random rune that is lexically and inclusively

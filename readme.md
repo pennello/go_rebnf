@@ -8,3 +8,4 @@ TODO
    to only terminal symbols.  Graph analysis of grammar?
  - Document how library does not avoid infinite productions (i.e.,
    `testlang/inf`).
+ - Context for `maxRepetitions` to allow customization.

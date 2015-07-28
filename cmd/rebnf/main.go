@@ -11,10 +11,12 @@ import (
 	"time"
 
 	"math/rand"
+
+	"chrispennello.com/go/rebnf"
 )
 
 var args struct {
-	prog string
+	prog  string
 	start *string
 }
 
@@ -46,12 +48,12 @@ func main() {
 		usage()
 	}
 
-	grammar, err := Parse(name, *args.start, r)
+	grammar, err := rebnf.Parse(name, *args.start, r)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	err = Random(os.Stdout, grammar, *args.start)
+	err = rebnf.Random(os.Stdout, grammar, *args.start)
 	if err != nil {
 		log.Fatal(err)
 	}

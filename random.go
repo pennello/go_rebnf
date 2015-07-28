@@ -1,4 +1,6 @@
-package main
+// chris 072815
+
+package rebnf
 
 import (
 	"errors"

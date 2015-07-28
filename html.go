@@ -1,6 +1,6 @@
 // chris 072115
 
-package main
+package rebnf
 
 import (
 	"bytes"
@@ -80,7 +80,7 @@ func ExtractEBNF(src []byte) []byte {
 // Unfortunately, it's not exported there, so we duplicate it here and
 // export it.
 func CheckRead(filename string, src []byte) []byte {
-	if filepath.Ext(filename) == ".html"  || bytes.Index(src, open) >= 0 {
+	if filepath.Ext(filename) == ".html" || bytes.Index(src, open) >= 0 {
 		src = ExtractEBNF(src)
 
 		log.Print(string(src))

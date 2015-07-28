@@ -51,10 +51,6 @@ func main() {
 		log.Fatal(err)
 	}
 
-	//err = ebnf.Verify(grammar, *args.start)
-	//if err != nil {
-	//	log.Fatal(err)
-	//}
 	err = Random(os.Stdout, grammar, *args.start)
 	if err != nil {
 		log.Fatal(err)

@@ -75,10 +75,17 @@ func findTerminals(exprs []ebnf.Expression) []ebnf.Expression {
 	return r
 }
 
+// random is the inner, recursive implementation of Random.  It handles
+// each of the ebnf.Expression implementations, outputting productions
+// randomly to the destination writer.  It implements a recursion depth
+// counter, and once the counter exceeds the limit, it favors producing
+// terminals over non-terminals.  Note that this does not guarantee
+// termination, however.  For example, the pathological grammar "S = S"
+// will loop forever.
 func random(dst io.Writer, grammar ebnf.Grammar, expr ebnf.Expression, depth int) error {
 	switch expr.(type) {
+	// Choose a random alternative.
 	case ebnf.Alternative:
-		// Choose a random alternative.
 		alt := expr.(ebnf.Alternative)
 		var exprs []ebnf.Expression
 		// If maximum recursion depth has been exceeded, attempt
@@ -99,25 +106,25 @@ func random(dst io.Writer, grammar ebnf.Grammar, expr ebnf.Expression, depth int
 			return err
 		}
 
+	// Evalute the group.
 	case *ebnf.Group:
-		// Evalute the group.
 		gr := expr.(*ebnf.Group)
 		err := random(dst, grammar, gr.Body, depth + 1)
 		if err != nil {
 			return err
 		}
 
+	// The name refers to a production; look it up and continue the
+	// recursion.
 	case *ebnf.Name:
-		// The name refers to a production; look it up and
-		// continue the recursion.
 		name := expr.(*ebnf.Name)
 		err := random(dst, grammar, grammar[name.String], depth + 1)
 		if err != nil {
 			return err
 		}
 
+	// Randomly include the option.
 	case *ebnf.Option:
-		// Randomly include the option.
 		opt := expr.(*ebnf.Option)
 		// If recursion depth has been exceeded, and option is
 		// non-termainl, unconditionally omit.
@@ -132,14 +139,15 @@ func random(dst io.Writer, grammar ebnf.Grammar, expr ebnf.Expression, depth int
 			}
 		}
 
+	// Produce the production.
 	case *ebnf.Production:
-		// Produce the production.
 		prod := expr.(*ebnf.Production)
 		err := random(dst, grammar, prod.Expr, depth + 1)
 		if err != nil {
 			return err
 		}
 
+	// Generate a random string in the given range.
 	case *ebnf.Range:
 		rng := expr.(*ebnf.Range)
 		ch, err := fixrand.ChooseString(rng.Begin.String, rng.End.String)
@@ -150,8 +158,8 @@ func random(dst io.Writer, grammar ebnf.Grammar, expr ebnf.Expression, depth int
 			return err
 		}
 
+	// Choose a random number of repetitions.
 	case *ebnf.Repetition:
-		// Choose a random number of repetitions.
 		rep := expr.(*ebnf.Repetition)
 		// If the recursion depth has been exceeded, and the
 		// repetition is non-terminal, unconditionally omit it.
@@ -168,8 +176,8 @@ func random(dst io.Writer, grammar ebnf.Grammar, expr ebnf.Expression, depth int
 			}
 		}
 
+	// Recurse on each of the expressions.
 	case ebnf.Sequence:
-		// Recurse on each of the expressions.
 		seq := expr.(ebnf.Sequence)
 		for _, e := range seq {
 			err := random(dst, grammar, e, depth + 1)
@@ -178,12 +186,13 @@ func random(dst io.Writer, grammar ebnf.Grammar, expr ebnf.Expression, depth int
 			}
 		}
 
+	// Emit the token.
 	case *ebnf.Token:
-		// Emit the token.
 		tok := expr.(*ebnf.Token)
 		if _, err := io.WriteString(dst, tok.String); err != nil {
 			return err
 		}
 	}
+
 	return nil
 }

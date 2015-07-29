@@ -7,10 +7,18 @@ Value = string | number | Object | Array | "true" | "false" | "null" .
 posdigit = "1" … "9" .
 digit = "0" | posdigit .
 
+// json.org says that a string can contain, besides escape sequences,
+// any UNICODE character except " or \ or control characters.
+// " is "\u0022" and \ is "\u005c".
+// The ISO 6429 control characters are as follows.
+// "\u0000" … "\u001f" | "\u007f" | "\u0080" … "\u009f"
+// (See: https://en.wikipedia.org/wiki/Unicode_control_characters)
+// Skirting around ", \, and the control characters gives the following.
+unichr = "\u0020" … "\u0021" | "\u0023" … "\u005b" | "\u005d" … "\u007e" | "\u00a0" … "\uffff" .
+
 hex = digit | "A" … "F" | "a" … "f" .
 uniesc = "u" hex hex hex hex .
 esc = "\\" ( "\"" | "\\" | "/" | "b" | "f" | "n" | "r" | "t" | uniesc ) .
-unichr = /* Any UNICODE character except " or \ or control character */ .
 string = "\"" { unichr | esc } "\"" .
 
 int = "0" | ( posdigit { digit } ) .

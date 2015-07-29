@@ -5,6 +5,7 @@ package rebnf
 import (
 	"bytes"
 	"fmt"
+	"html"
 
 	"path/filepath"
 )
@@ -142,9 +143,13 @@ func StripTag(tagname string, src []byte) []byte {
 func CheckRead(filename string, src []byte) []byte {
 	if filepath.Ext(filename) == ".html" || bytes.Index(src, ebnfopen) >= 0 {
 		src = ExtractEBNF(src)
+
 		// The Go Programming Language Specification HTML page
 		// wraps production names with links.
 		src = StripTag("a", src)
+
+		// We also want to unescape HTML escape sequences.
+		src = []byte(html.UnescapeString(string(src)))
 	}
 	return src
 }

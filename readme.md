@@ -1,7 +1,5 @@
 TODO
 ----
- - Move exported functions to importable (non-main) package.
- - GoDoc methods, etc.
  - On error, output chosen seed.  Accept seed as an input so you can
    reproduce errors.
  - Bound output.  Recursion depth limit?  Need to understand how to get

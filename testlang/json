@@ -1,8 +1,8 @@
-objinner = string ":" value .
-object = "{" [ objinner { "," objinner } ] "}" .
+ObjInner = string ":" Value .
+Object = "{" [ ObjInner { "," ObjInner } ] "}" .
 
-array = "[" [ value { "," value } ] "]" .
-value = string | number | object | array | "true" | "false" | "null" .
+Array = "[" [ Value { "," Value } ] "]" .
+Value = string | number | Object | Array | "true" | "false" | "null" .
 
 posdigit = "1" … "9" .
 digit = "0" | posdigit .
@@ -10,7 +10,7 @@ digit = "0" | posdigit .
 hex = digit | "A" … "F" | "a" … "f" .
 uniesc = "u" hex hex hex hex .
 esc = "\\" ( "\"" | "\\" | "/" | "b" | "f" | "n" | "r" | "t" | uniesc ) .
-unichr = "a" … "z" | "A" … "Z" .
+unichr = /* Any UNICODE character except " or \ or control character */ .
 string = "\"" { unichr | esc } "\"" .
 
 int = "0" | ( posdigit { digit } ) .

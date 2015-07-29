@@ -126,12 +126,10 @@ func StripTag(tagname string, src []byte) []byte {
 		// Copy up to the close.
 		buf.Write(src[:k])
 
-		m := k + len(close)
-
-		preserveNewlines(buf, src[k:m])
+		k += len(close)
 
 		// advance
-		src = src[m:]
+		src = src[k:]
 	}
 
 	return buf.Bytes()

@@ -69,6 +69,18 @@ func ExtractEBNF(src []byte) []byte {
 	return buf.Bytes()
 }
 
+// StripTag strips out the named tag from a slice of bytes.  The tag is
+// expected to open with a string of the following form.
+//
+//	<tagname ...>
+//
+// Where ... can be anything.  If any newlines appear in the ..., they
+// will be preserved.
+//
+// The tag is expected to close with a string of the following form.
+//
+//	</tagname>
+//
 func StripTag(tagname string, src []byte) []byte {
 	buf := new(bytes.Buffer)
 

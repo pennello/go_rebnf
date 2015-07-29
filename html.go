@@ -4,51 +4,55 @@ package rebnf
 
 import (
 	"bytes"
+	"fmt"
+
 	"path/filepath"
-
-	"log"
 )
 
-// Markers around EBNF sections in .html files.
+// Markers around EBNF sections in HTML files.
 var (
-	open  = []byte(`<pre class="ebnf">`)
-	close = []byte(`</pre>`)
+	ebnfopen  = []byte(`<pre class="ebnf">`)
+	ebnfclose = []byte(`</pre>`)
 )
 
-// ExtractEBNF extracts the EBNF text from a file with the open and
-// close markers defined above.  E.g., the Go Programming Language
-// Specification HTML page.
-//
-// Grammar productions are grouped in boxes demarcated by the following
-// HTML elements.
+func preserveNewlines(buf *bytes.Buffer, excl []byte) {
+	// write as many newlines as found in the excluded text
+	// to maintain correct line numbers in error messages
+	for _, ch := range excl {
+		if ch == '\n' {
+			buf.WriteByte('\n')
+		}
+	}
+}
+
+// ExtractEBNF extracts the EBNF text from a file in which grammar
+// productions are grouped in boxes demarcated by the following HTML
+// elements.
 //
 //	<pre class="ebnf">
 //	</pre>
 //
-// ExtractEBNF is itself extracted from golang.org/x/exp/ebnflint.
-// Unfortunately, it's not exported there, so we duplicate it here and
-// export it.
+// An example of such a file is the Go Programming Language
+// Specification HTML page.
+//
+// ExtractEBNF was itself initially extracted from
+// golang.org/x/exp/ebnflint.  Unfortunately, it's not exported there,
+// so we duplicate it here and export it.
 func ExtractEBNF(src []byte) []byte {
-	var buf bytes.Buffer
+	buf := new(bytes.Buffer)
 
 	for {
 		// i = beginning of EBNF text
-		i := bytes.Index(src, open)
+		i := bytes.Index(src, ebnfopen)
 		if i < 0 {
 			break // no EBNF found - we are done
 		}
-		i += len(open)
+		i += len(ebnfopen)
 
-		// write as many newlines as found in the excluded text
-		// to maintain correct line numbers in error messages
-		for _, ch := range src[0:i] {
-			if ch == '\n' {
-				buf.WriteByte('\n')
-			}
-		}
+		preserveNewlines(buf, src[:i])
 
 		// j = end of EBNF text (or end of source)
-		j := bytes.Index(src[i:], close) // close marker
+		j := bytes.Index(src[i:], ebnfclose) // close marker
 		if j < 0 {
 			j = len(src) - i
 		}
@@ -59,6 +63,62 @@ func ExtractEBNF(src []byte) []byte {
 
 		// advance
 		src = src[j:]
+	}
+
+	return buf.Bytes()
+}
+
+func StripTag(tagname string, src []byte) []byte {
+	buf := new(bytes.Buffer)
+
+	var (
+		openbegin = []byte(fmt.Sprintf("<%s ", tagname))
+		openend   = []byte(`>`)
+		close     = []byte(fmt.Sprintf("</%s>", tagname))
+	)
+
+	for {
+		// i = beginning of the opening of the tag
+		i := bytes.Index(src, openbegin)
+		if i < 0 {
+			// no tag found - copy rest, and we are done
+			buf.Write(src)
+			break
+		}
+
+		// j = end of the opening of the tag
+		j := bytes.Index(src[i:], openend)
+		if j < 0 {
+			// tag doesn't close - we are done
+			break
+		}
+		j += i // Since we sliced src after the beginning of the open.
+		j += len(openend)
+
+		preserveNewlines(buf, src[i:j])
+
+		// elide opening tag
+		buf.Write(src[:i])
+		src = src[j:]
+
+		// k = end of tag (or end of source)
+		k := bytes.Index(src, close) // close marker
+		if k < 0 {
+			// Great, we want everything then, and we're
+			// done.
+			buf.Write(src)
+			break
+		}
+
+		// Copy up to the close.
+		buf.Write(src[:k])
+
+		m := k + len(close)
+
+		preserveNewlines(buf, src[k:m])
+
+		// advance
+		src = src[m:]
 	}
 
 	return buf.Bytes()
@@ -80,10 +140,11 @@ func ExtractEBNF(src []byte) []byte {
 // Unfortunately, it's not exported there, so we duplicate it here and
 // export it.
 func CheckRead(filename string, src []byte) []byte {
-	if filepath.Ext(filename) == ".html" || bytes.Index(src, open) >= 0 {
+	if filepath.Ext(filename) == ".html" || bytes.Index(src, ebnfopen) >= 0 {
 		src = ExtractEBNF(src)
-
-		log.Print(string(src))
+		// The Go Programming Language Specification HTML page
+		// wraps production names with links.
+		src = StripTag("a", src)
 	}
 	return src
 }

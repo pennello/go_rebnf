@@ -15,7 +15,7 @@ import (
 )
 
 const (
-	maxRepetitions = 100
+	maxRepetitions    = 100
 	maxRecursionDepth = 100
 )
 
@@ -101,7 +101,7 @@ func random(dst io.Writer, grammar ebnf.Grammar, expr ebnf.Expression, depth int
 		} else {
 			exprs = alt
 		}
-		err := random(dst, grammar, exprs[mathrand.Intn(len(exprs))], depth + 1)
+		err := random(dst, grammar, exprs[mathrand.Intn(len(exprs))], depth+1)
 		if err != nil {
 			return err
 		}
@@ -109,7 +109,7 @@ func random(dst io.Writer, grammar ebnf.Grammar, expr ebnf.Expression, depth int
 	// Evalute the group.
 	case *ebnf.Group:
 		gr := expr.(*ebnf.Group)
-		err := random(dst, grammar, gr.Body, depth + 1)
+		err := random(dst, grammar, gr.Body, depth+1)
 		if err != nil {
 			return err
 		}
@@ -118,7 +118,7 @@ func random(dst io.Writer, grammar ebnf.Grammar, expr ebnf.Expression, depth int
 	// recursion.
 	case *ebnf.Name:
 		name := expr.(*ebnf.Name)
-		err := random(dst, grammar, grammar[name.String], depth + 1)
+		err := random(dst, grammar, grammar[name.String], depth+1)
 		if err != nil {
 			return err
 		}
@@ -133,7 +133,7 @@ func random(dst io.Writer, grammar ebnf.Grammar, expr ebnf.Expression, depth int
 		} else if fixrand.Bool() {
 			// Otherwise, proceed with usual random
 			// inclusion of option.
-			err := random(dst, grammar, opt.Body, depth + 1)
+			err := random(dst, grammar, opt.Body, depth+1)
 			if err != nil {
 				return err
 			}
@@ -142,7 +142,7 @@ func random(dst io.Writer, grammar ebnf.Grammar, expr ebnf.Expression, depth int
 	// Produce the production.
 	case *ebnf.Production:
 		prod := expr.(*ebnf.Production)
-		err := random(dst, grammar, prod.Expr, depth + 1)
+		err := random(dst, grammar, prod.Expr, depth+1)
 		if err != nil {
 			return err
 		}
@@ -169,7 +169,7 @@ func random(dst io.Writer, grammar ebnf.Grammar, expr ebnf.Expression, depth int
 			// Otherwise, do normal inclusion of a random
 			// number of repetitions.
 			for i := 0; i < mathrand.Intn(maxRepetitions+1); i++ {
-				err := random(dst, grammar, rep.Body, depth + 1)
+				err := random(dst, grammar, rep.Body, depth+1)
 				if err != nil {
 					return err
 				}
@@ -180,7 +180,7 @@ func random(dst io.Writer, grammar ebnf.Grammar, expr ebnf.Expression, depth int
 	case ebnf.Sequence:
 		seq := expr.(ebnf.Sequence)
 		for _, e := range seq {
-			err := random(dst, grammar, e, depth + 1)
+			err := random(dst, grammar, e, depth+1)
 			if err != nil {
 				return err
 			}

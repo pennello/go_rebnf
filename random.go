@@ -14,11 +14,6 @@ import (
 	"golang.org/x/exp/ebnf"
 )
 
-const (
-	maxRepetitions    = 100
-	maxRecursionDepth = 100
-)
-
 // ErrNoStart is returned by Random when the specified start production
 // cannot be found in the grammar.
 var ErrNoStart = errors.New("start production not found")
@@ -26,12 +21,12 @@ var ErrNoStart = errors.New("start production not found")
 // Random generates random productions of the given grammar starting at
 // the given start production, and writes them into the destination
 // io.Writer.
-func Random(dst io.Writer, grammar ebnf.Grammar, start string) error {
+func (c *Ctx) Random(dst io.Writer, grammar ebnf.Grammar, start string) error {
 	prod, ok := grammar[start]
 	if !ok {
 		return ErrNoStart
 	}
-	return random(dst, grammar, prod.Expr, 0)
+	return c.random(dst, grammar, prod.Expr, 0)
 }
 
 // IsCapital returns a boolean indicating whether or not the first rune
@@ -82,7 +77,7 @@ func findTerminals(exprs []ebnf.Expression) []ebnf.Expression {
 // terminals over non-terminals.  Note that this does not guarantee
 // termination, however.  For example, the pathological grammar "S = S"
 // will loop forever.
-func random(dst io.Writer, grammar ebnf.Grammar, expr ebnf.Expression, depth int) error {
+func (c *Ctx) random(dst io.Writer, grammar ebnf.Grammar, expr ebnf.Expression, depth int) error {
 	switch expr.(type) {
 	// Choose a random alternative.
 	case ebnf.Alternative:
@@ -90,7 +85,7 @@ func random(dst io.Writer, grammar ebnf.Grammar, expr ebnf.Expression, depth int
 		var exprs []ebnf.Expression
 		// If maximum recursion depth has been exceeded, attempt
 		// to select from only terminal expressions.
-		if depth > maxRecursionDepth {
+		if depth > c.maxdepth {
 			exprs = findTerminals(alt)
 			if len(exprs) == 0 {
 				// No luck, we have no choice but to
@@ -101,7 +96,7 @@ func random(dst io.Writer, grammar ebnf.Grammar, expr ebnf.Expression, depth int
 		} else {
 			exprs = alt
 		}
-		err := random(dst, grammar, exprs[mathrand.Intn(len(exprs))], depth+1)
+		err := c.random(dst, grammar, exprs[mathrand.Intn(len(exprs))], depth+1)
 		if err != nil {
 			return err
 		}
@@ -109,7 +104,7 @@ func random(dst io.Writer, grammar ebnf.Grammar, expr ebnf.Expression, depth int
 	// Evalute the group.
 	case *ebnf.Group:
 		gr := expr.(*ebnf.Group)
-		err := random(dst, grammar, gr.Body, depth+1)
+		err := c.random(dst, grammar, gr.Body, depth+1)
 		if err != nil {
 			return err
 		}
@@ -118,7 +113,7 @@ func random(dst io.Writer, grammar ebnf.Grammar, expr ebnf.Expression, depth int
 	// recursion.
 	case *ebnf.Name:
 		name := expr.(*ebnf.Name)
-		err := random(dst, grammar, grammar[name.String], depth+1)
+		err := c.random(dst, grammar, grammar[name.String], depth+1)
 		if err != nil {
 			return err
 		}
@@ -128,12 +123,12 @@ func random(dst io.Writer, grammar ebnf.Grammar, expr ebnf.Expression, depth int
 		opt := expr.(*ebnf.Option)
 		// If recursion depth has been exceeded, and option is
 		// non-termainl, unconditionally omit.
-		if depth > maxRecursionDepth && !IsTerminal(opt.Body) {
+		if depth > c.maxdepth && !IsTerminal(opt.Body) {
 			// Omit.
 		} else if fixrand.Bool() {
 			// Otherwise, proceed with usual random
 			// inclusion of option.
-			err := random(dst, grammar, opt.Body, depth+1)
+			err := c.random(dst, grammar, opt.Body, depth+1)
 			if err != nil {
 				return err
 			}
@@ -142,7 +137,7 @@ func random(dst io.Writer, grammar ebnf.Grammar, expr ebnf.Expression, depth int
 	// Produce the production.
 	case *ebnf.Production:
 		prod := expr.(*ebnf.Production)
-		err := random(dst, grammar, prod.Expr, depth+1)
+		err := c.random(dst, grammar, prod.Expr, depth+1)
 		if err != nil {
 			return err
 		}
@@ -163,13 +158,13 @@ func random(dst io.Writer, grammar ebnf.Grammar, expr ebnf.Expression, depth int
 		rep := expr.(*ebnf.Repetition)
 		// If the recursion depth has been exceeded, and the
 		// repetition is non-terminal, unconditionally omit it.
-		if depth > maxRecursionDepth && !IsTerminal(rep.Body) {
+		if depth > c.maxdepth && !IsTerminal(rep.Body) {
 			// Omit.
 		} else {
 			// Otherwise, do normal inclusion of a random
 			// number of repetitions.
-			for i := 0; i < mathrand.Intn(maxRepetitions+1); i++ {
-				err := random(dst, grammar, rep.Body, depth+1)
+			for i := 0; i < mathrand.Intn(c.maxreps+1); i++ {
+				err := c.random(dst, grammar, rep.Body, depth+1)
 				if err != nil {
 					return err
 				}
@@ -180,7 +175,7 @@ func random(dst io.Writer, grammar ebnf.Grammar, expr ebnf.Expression, depth int
 	case ebnf.Sequence:
 		seq := expr.(ebnf.Sequence)
 		for _, e := range seq {
-			err := random(dst, grammar, e, depth+1)
+			err := c.random(dst, grammar, e, depth+1)
 			if err != nil {
 				return err
 			}

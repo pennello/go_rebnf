@@ -16,16 +16,26 @@ import (
 )
 
 var args struct {
-	prog  string
-	start *string
+	prog     string
+	start    string
+	maxreps  int
+	maxdepth int
 }
 
 func init() {
 	log.SetFlags(0)
 	rand.Seed(time.Now().UTC().UnixNano())
-	args.start = flag.String("start", "Start", "name of start production")
+
+	start    := flag.String("start", "Start", "name of start production")
+	maxreps  := flag.Int("maxreps", 100, "maximum number of repetitions")
+	maxdepth := flag.Int("maxdepth", 100, "maximum recursion depth")
+
 	flag.Parse()
-	args.prog = os.Args[0]
+
+	args.prog     = os.Args[0]
+	args.start    = *start
+	args.maxreps  = *maxreps
+	args.maxdepth = *maxdepth
 }
 
 func usage() {
@@ -48,12 +58,13 @@ func main() {
 		usage()
 	}
 
-	grammar, err := rebnf.Parse(name, *args.start, r)
+	grammar, err := rebnf.Parse(name, args.start, r)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	err = rebnf.Random(os.Stdout, grammar, *args.start)
+	ctx := rebnf.NewCtx(args.maxreps, args.maxdepth)
+	err = ctx.Random(os.Stdout, grammar, args.start)
 	if err != nil {
 		log.Fatal(err)
 	}

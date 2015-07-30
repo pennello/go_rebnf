@@ -76,7 +76,7 @@ func findTerminals(exprs []ebnf.Expression) []ebnf.Expression {
 // counter, and once the counter exceeds the limit, it favors producing
 // terminals over non-terminals.  Note that this does not guarantee
 // termination, however.  For example, the pathological grammar "S = S"
-// will loop forever.
+// will still loop forever.
 func (c *Ctx) random(dst io.Writer, grammar ebnf.Grammar, expr ebnf.Expression, depth int) error {
 	switch expr.(type) {
 	// Choose a random alternative.

@@ -35,14 +35,15 @@
 // may control the random productions is via a recursion depth limit.
 // Recall that exp/ebnf EBNF grammars distinguish between non-terminal
 // and terminal productions by using capitalized or uncapitalized names.
-// When the recursion depth limit is exceeded, the code will make an
-// effort to favor terminal symbols over non-terminal ones.  Note that
-// this does NOT protect, you, however from pathological grammars such
-// as "S = S", or other grammars that necessitate infinite productions.
+// When the recursion depth limit is exceeded, the algorithm will make
+// an effort to favor terminal symbols over non-terminal ones.  Note
+// that this does NOT protect, you, however from pathological grammars
+// such as "S = S", or other grammars that necessitate infinite
+// productions.
 //
 // Usage is as follows.
 //
-//	rebnf [-h] [options] [grammar_file]
+//	rebnf [-h] [options] [grammarfile]
 //	  -maxdepth=100:  maximum recursion depth
 //	  -maxreps=100:   maximum number of repetitions
 //	  -seed=-1:       random seed

@@ -16,9 +16,9 @@ var (
 	ebnfclose = []byte(`</pre>`)
 )
 
+// preserveNewlines writes as many newlines as found in the excluded
+// text to maintain correct line numbers in error messages.
 func preserveNewlines(buf *bytes.Buffer, excl []byte) {
-	// write as many newlines as found in the excluded text
-	// to maintain correct line numbers in error messages
 	for _, ch := range excl {
 		if ch == '\n' {
 			buf.WriteByte('\n')
@@ -135,7 +135,7 @@ func StripTag(tagname string, src []byte) []byte {
 	return buf.Bytes()
 }
 
-// CheckRead checks the input filename to see if it ends in ".html" or,
+// CheckExtract checks the input filename to see if it ends in ".html" or,
 // if not, then checks if an opening token is present.  If either is
 // true, then the source byte array is treated as an HTML document and
 // EBNF text is extracted according to the following opening and closing
@@ -145,12 +145,12 @@ func StripTag(tagname string, src []byte) []byte {
 //	</pre>
 //
 // In this case, the extracted byte slice is returned instead of the
-// original.  Otherwise, the original byte slice is returned.
+// original.  In addition, it strips out A tags and unescapes any HTML
+// escape sequences, such as "&amp;".
 //
-// The logic in CheckRead is extracted from golang.org/x/exp/ebnflint.
-// Unfortunately, it's not exported there, so we duplicate it here and
-// export it.
-func CheckRead(filename string, src []byte) []byte {
+// If the filename doesn't end with ".html", or the opening token isn't
+// present, the original byte slice is returned instead.
+func CheckExtract(filename string, src []byte) []byte {
 	if filepath.Ext(filename) == ".html" || bytes.Index(src, ebnfopen) >= 0 {
 		src = ExtractEBNF(src)
 

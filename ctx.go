@@ -4,6 +4,7 @@ package rebnf
 
 // Ctx is a context for making Random calls.  It provides several limits
 // to the recursive grammar-walking algorithm to help limit its output.
+// See NewCtx.
 type Ctx struct {
 	maxreps  int
 	maxdepth int

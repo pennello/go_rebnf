@@ -8,3 +8,4 @@ TODO
 Future Work
 -----------
  - Non-uniform production weighting.
+ - Mode to prefer non-weird characters.

@@ -5,6 +5,11 @@
 // In particular, it extracts grammars from HTML documents, as specified
 // by golang.org/x/exp/ebnflint, which includes the Go Programming
 // Language Specification HTML page.
+//
+// Options are:
+//
+//	-strip=false: strip superfluous newlines
+//
 package main
 
 import (

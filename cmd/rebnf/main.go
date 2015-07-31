@@ -114,7 +114,7 @@ func main() {
 		usage()
 	}
 
-	grammar, err := rebnf.Parse(name, args.start, r)
+	grammar, err := rebnf.Parse(name, r)
 	if err != nil {
 		log.Fatal(err)
 	}

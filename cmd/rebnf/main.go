@@ -62,6 +62,7 @@ import (
 	"math/rand"
 
 	"chrispennello.com/go/rebnf"
+	"golang.org/x/exp/ebnf"
 )
 
 var args struct {
@@ -115,6 +116,12 @@ func main() {
 	}
 
 	grammar, err := rebnf.Parse(name, r)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Verify grammar before attempting any productions.
+	err = ebnf.Verify(grammar, args.start)
 	if err != nil {
 		log.Fatal(err)
 	}

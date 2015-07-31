@@ -41,12 +41,18 @@
 // such as "S = S", or other grammars that necessitate infinite
 // productions.
 //
+// There is also an option to insert padding characters on either side
+// of non-terminal symbols.  The default is to insert a space, but you
+// may specify any string of padding characters for the algorithm to
+// randomly choose from.
+//
 // Usage is as follows.
 //
 //	rebnf [-h] [options] [grammarfile]
-//	  -maxdepth=100:  maximum recursion depth
-//	  -maxreps=100:   maximum number of repetitions
-//	  -seed=-1:       random seed
+//	  -maxdepth=100: maximum recursion depth
+//	  -maxreps=100: maximum number of repetitions
+//	  -padding=" ": non-terminal padding characters
+//	  -seed=-1: random seed
 //	  -start="Start": name of start production
 //
 package main
@@ -71,6 +77,7 @@ var args struct {
 	start    string
 	maxreps  int
 	maxdepth int
+	padding  string
 }
 
 func init() {
@@ -80,6 +87,7 @@ func init() {
 	start    := flag.String("start", "Start", "name of start production")
 	maxreps  := flag.Int("maxreps", 100, "maximum number of repetitions")
 	maxdepth := flag.Int("maxdepth", 100, "maximum recursion depth")
+	padding  := flag.String("padding", " ", "non-terminal padding characters")
 
 	flag.Parse()
 
@@ -88,6 +96,7 @@ func init() {
 	args.start    = *start
 	args.maxreps  = *maxreps
 	args.maxdepth = *maxdepth
+	args.padding  = *padding
 
 	if args.seed == -1 {
 		args.seed = time.Now().UTC().UnixNano()
@@ -126,7 +135,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	ctx := rebnf.NewCtx(args.maxreps, args.maxdepth)
+	ctx := rebnf.NewCtx(args.maxreps, args.maxdepth, args.padding)
 	log.Printf("seed %d", args.seed)
 	err = ctx.Random(os.Stdout, grammar, args.start)
 	if err != nil {

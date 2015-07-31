@@ -5,7 +5,6 @@ TODO
  - Add CR license.
  - Document test languages in repo.
  - Document tools.
- - Option (default true) to insert spaces around non-terminals.
 
 Future Work
 -----------

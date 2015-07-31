@@ -70,6 +70,18 @@ func findTerminals(exprs []ebnf.Expression) []ebnf.Expression {
 	return r
 }
 
+// pad picks a random rune from the padding string specified by the
+// context and writes it to the destination writer.
+func (c *Ctx) pad(dst io.Writer) error {
+	runes := []rune(c.padding)
+	if len(runes) == 0 {
+		return nil
+	}
+	r := runes[mathrand.Intn(len(runes))]
+	_, err :=io.WriteString(dst, string([]rune{r}))
+	return err
+}
+
 // random is the inner, recursive implementation of Random.  It handles
 // each of the ebnf.Expression implementations, outputting productions
 // randomly to the destination writer.  It implements a recursion depth
@@ -113,9 +125,16 @@ func (c *Ctx) random(dst io.Writer, grammar ebnf.Grammar, expr ebnf.Expression, 
 	// recursion.
 	case *ebnf.Name:
 		name := expr.(*ebnf.Name)
+		pad := IsTerminal(expr)
+		if pad {
+			c.pad(dst)
+		}
 		err := c.random(dst, grammar, grammar[name.String], depth+1)
 		if err != nil {
 			return err
+		}
+		if pad {
+			c.pad(dst)
 		}
 
 	// Randomly include the option.

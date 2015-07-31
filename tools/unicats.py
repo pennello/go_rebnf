@@ -2,17 +2,17 @@
 
 # chris 073015
 
-import sys
-
 from HTMLParser import HTMLParser
-from os.path import commonprefix
+from argparse import ArgumentParser
 from contextlib import closing
+from os.path import commonprefix
 from urllib2 import urlopen
 
 base = 'http://www.fileformat.info/info/unicode/category'
 
 htmlunescape = HTMLParser().unescape
 
+# Get characters.
 def getchars(cat):
   url = '%s/%s/list.htm' % (base,cat)
   chars = []
@@ -30,12 +30,8 @@ def getchars(cat):
       chars.append((point,descr))
   return chars
 
-def main(self,*cats):
-  chars = []
-  for cat in cats:
-    chars.extend(getchars(cat))
-
-  # Consolidate contiguous ranges.
+# Consolidate contiguous ranges.
+def consolidate(chars):
   chars.sort()
   ranges = []
   last = start = None
@@ -54,6 +50,9 @@ def main(self,*cats):
     last = point
     descrs.append(descr)
 
+  return ranges
+
+def output(ranges):
   for (start,end),descr in ranges:
     out = ''
     if start == end:
@@ -64,4 +63,19 @@ def main(self,*cats):
     out += ' | // %s' % descr
     print out
 
-main(*sys.argv)
+def main():
+  descr = ('This script takes one or more names of Unicode character '
+    'categories as command line arguments.  It fetches the '
+    'character listings from fileformat.info and consolidates '
+    'them into ranges with helpful comments.  The output is '
+    'suitable for use in golang.org/x/exp/ebnf EBNF grammars.')
+  parser = ArgumentParser(description=descr)
+  parser.add_argument('cat',nargs='+',help='unicode category name')
+  args = parser.parse_args()
+
+  chars = []
+  for cat in args.cat: chars.extend(getchars(cat))
+  ranges = consolidate(chars)
+  output(ranges)
+
+main()

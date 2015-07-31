@@ -1,2 +1,2 @@
-cd `dirname $0`
+# All Unicode code points classified as "Decimal Digit".
 python unicats.py Nd

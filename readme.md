@@ -5,6 +5,8 @@ TODO
  - Add CR license.
  - Document test languages in repo.
  - Document tools.
+ - Figure out why some JSON productions are invalid (according to
+   `python -m json.tool`).
 
 Future Work
 -----------

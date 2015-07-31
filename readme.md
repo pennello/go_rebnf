@@ -4,6 +4,7 @@ TODO
  - Make readme publicly consumable.
  - Add CR license.
  - Document test languages in repo.
+ - Option (default true) to insert spaces around non-terminals.
 
 Future Work
 -----------

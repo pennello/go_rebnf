@@ -226,6 +226,10 @@ func (c *Ctx) random(dst io.Writer, grammar ebnf.Grammar, expr ebnf.Expression, 
 		if _, err := io.WriteString(dst, tok.String); err != nil {
 			return err
 		}
+
+	default:
+		// This indicates a bug in the code.
+		panic(fmt.Sprintf("bad expression %#v", expr))
 	}
 
 	return nil

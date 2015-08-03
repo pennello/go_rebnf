@@ -36,7 +36,7 @@
 // such as "S = S", or other grammars that necessitate infinite
 // productions.  This recursion depth limit is another one of the
 // arguments you must specify when creating a context.  A reasonable
-// value is 100.
+// value is 30.
 //
 // Pass the grammar and the name of the start production into Random, a
 // function defined on contexts.  The output instance of the language

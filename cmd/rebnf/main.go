@@ -49,10 +49,10 @@
 // Usage is as follows.
 //
 //	rebnf [-h] [options] [grammarfile]
-//	  -maxdepth=100: maximum recursion depth
-//	  -maxreps=100: maximum number of repetitions
-//	  -padding=" ": non-terminal padding characters
-//	  -seed=-1: random seed
+//	  -maxdepth=30:   maximum recursion depth
+//	  -maxreps=100:   maximum number of repetitions
+//	  -padding=" ":   non-terminal padding characters
+//	  -seed=-1:       random seed
 //	  -start="Start": name of start production
 //
 package main
@@ -86,7 +86,7 @@ func init() {
 	seed     := flag.Int64("seed", -1, "random seed")
 	start    := flag.String("start", "Start", "name of start production")
 	maxreps  := flag.Int("maxreps", 100, "maximum number of repetitions")
-	maxdepth := flag.Int("maxdepth", 100, "maximum recursion depth")
+	maxdepth := flag.Int("maxdepth", 30, "maximum recursion depth")
 	padding  := flag.String("padding", " ", "non-terminal padding characters")
 
 	flag.Parse()

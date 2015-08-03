@@ -21,4 +21,4 @@ including one in which the Unicode productions have been defined.
 Future Work
 -----------
  - Non-uniform production weighting.
- - Mode to prefer non-weird characters.
+ - Mode to prefer non-weird characters (e.g., put it in "ASCII mode").

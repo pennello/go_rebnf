@@ -103,6 +103,12 @@ func (c *Ctx) random(dst io.Writer, grammar ebnf.Grammar, expr ebnf.Expression, 
 	c.log("recursion depth %d\n", depth)
 	c.log("%#v\n\n", expr)
 
+	if expr == nil {
+		// Explicitly emit for a nil expression.  Where could
+		// this arise?  E.g., the grammar "S = .".
+		return nil
+	}
+
 	switch expr.(type) {
 	// Choose a random alternative.
 	case ebnf.Alternative:

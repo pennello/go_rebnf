@@ -2,8 +2,6 @@ TODO
 ----
  - Make readme publicly consumable.
  - Add CR license.
- - Figure out why some JSON productions are invalid (according to
-   `python -m json.tool`).
 
 Tools
 -----

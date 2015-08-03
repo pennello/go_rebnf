@@ -23,5 +23,5 @@ string = "\"" { unichr | esc } "\"" .
 
 int = "0" | ( posdigit { digit } ) .
 frac = "." digit { digit } .
-exp = ( "e" | "E" ) [ "+" | "-" ] { digit } .
+exp = ( "e" | "E" ) [ "+" | "-" ] digit { digit } .
 number = [ "-" ] int [ frac ] [ exp ] .

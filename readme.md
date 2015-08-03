@@ -8,7 +8,7 @@ Documentation
 Tools
 -----
 The `tools` directory contains a Python tool for fetching Unicode
-character ranges from `fileformat.info` and consolidating them into EBNF
+character ranges from [fileformat.info][1] and consolidating them into EBNF
 alternative range expressions, suitable for consumption by `rebnf`.
 
 Test Languages
@@ -22,3 +22,5 @@ Future Work
 -----------
  - Non-uniform production weighting.
  - Mode to prefer non-weird characters (e.g., put it in "ASCII mode").
+
+[1]: http://www.fileformat.info/info/unicode/category/

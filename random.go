@@ -35,7 +35,7 @@ func (c *Ctx) Random(dst io.Writer, grammar ebnf.Grammar, start string) error {
 // of the given string is upper case.
 func IsCapital(s string) bool {
 	ch, _ := utf8.DecodeRuneInString(s)
-	return !unicode.IsUpper(ch)
+	return unicode.IsUpper(ch)
 }
 
 // IsTerminal returns a boolean that indicates whether the given

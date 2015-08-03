@@ -1,6 +1,5 @@
 TODO
 ----
- - Write out actual ranges for Go grammar character productions.
  - Make readme publicly consumable.
  - Add CR license.
  - Figure out why some JSON productions are invalid (according to

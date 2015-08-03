@@ -15,6 +15,7 @@ digit = "0" | posdigit .
 // (See: https://en.wikipedia.org/wiki/Unicode_control_characters)
 // Skirting around ", \, and the control characters gives the following.
 unichr = "\u0020" … "\u0021" | "\u0023" … "\u005b" | "\u005d" … "\u007e" | "\u00a0" … "\uffff" .
+// TODO Include above plane 0?
 
 hex = digit | "A" … "F" | "a" … "f" .
 uniesc = "u" hex hex hex hex .

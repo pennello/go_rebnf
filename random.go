@@ -78,7 +78,7 @@ func (c *Ctx) pad(dst io.Writer) error {
 		return nil
 	}
 	r := runes[mathrand.Intn(len(runes))]
-	_, err :=io.WriteString(dst, string([]rune{r}))
+	_, err := io.WriteString(dst, string([]rune{r}))
 	return err
 }
 

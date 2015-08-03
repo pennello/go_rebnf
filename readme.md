@@ -2,6 +2,8 @@ TODO
 ----
  - Make readme publicly consumable.
  - Add CR license.
+ - Reach out to Go mailing list; mention weird issues with random
+   productions of Go grammar.
 
 Tools
 -----

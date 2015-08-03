@@ -140,7 +140,8 @@ func (c *Ctx) random(dst io.Writer, grammar ebnf.Grammar, expr ebnf.Expression, 
 	// recursion.
 	case *ebnf.Name:
 		name := expr.(*ebnf.Name)
-		pad := IsTerminal(expr)
+		// Pad non-terminals.
+		pad := !IsTerminal(expr)
 		if pad {
 			c.pad(dst)
 		}

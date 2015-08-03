@@ -1,0 +1,15 @@
+// EBNF grammar for EBNF from golang.org/x/exp/ebnf documentation.
+Production  = name "=" [ Expression ] "." .
+Expression  = Alternative { "|" Alternative } .
+Alternative = Term { Term } .
+Term        = name | token [ "…" token ] | Group | Option | Repetition .
+Group       = "(" Expression ")" .
+Option      = "[" Expression "]" .
+Repetition  = "{" Expression "}" .
+
+// Definitions of name and token to permit this to actually produce
+// anything.
+letter = "a" … "z" | "A" … "Z" .
+name = letter { letter } .
+char = " " | letter .
+token = "\"" ( char { char } ) "\"" .

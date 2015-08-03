@@ -1,0 +1,790 @@
+// the Unicode code point U+000A
+newline        = "\u000a" .
+
+// an arbitrary Unicode code point except newline
+unicode_char   = "\u0000" … "\u0009" | "\u000b" … "\U0010ffff" .
+
+// a Unicode code point classified as "Letter"
+unicode_letter =
+"\U00000041" … "\U0000005a" | // LATIN CAPITAL LETTER 
+"\U00000061" … "\U0000007a" | // LATIN SMALL LETTER 
+"\U000000aa"                | // FEMININE ORDINAL INDICATOR
+"\U000000b5"                | // MICRO SIGN
+"\U000000ba"                | // MASCULINE ORDINAL INDICATOR
+"\U000000c0" … "\U000000d6" | // LATIN CAPITAL LETTER 
+"\U000000d8" … "\U000000f6" | // LATIN 
+"\U000000f8" … "\U000002c1" | // ?
+"\U000002c6" … "\U000002d1" | // ?
+"\U000002e0" … "\U000002e4" | // MODIFIER LETTER SMALL 
+"\U000002ec"                | // MODIFIER LETTER VOICING
+"\U000002ee"                | // MODIFIER LETTER DOUBLE APOSTROPHE
+"\U00000370" … "\U00000374" | // GREEK 
+"\U00000376" … "\U00000377" | // GREEK 
+"\U0000037a" … "\U0000037d" | // GREEK 
+"\U0000037f"                | // GREEK CAPITAL LETTER YOT
+"\U00000386"                | // GREEK CAPITAL LETTER ALPHA WITH TONOS
+"\U00000388" … "\U0000038a" | // GREEK CAPITAL LETTER 
+"\U0000038c"                | // GREEK CAPITAL LETTER OMICRON WITH TONOS
+"\U0000038e" … "\U000003a1" | // GREEK 
+"\U000003a3" … "\U000003f5" | // ?
+"\U000003f7" … "\U00000481" | // ?
+"\U0000048a" … "\U0000052f" | // CYRILLIC 
+"\U00000531" … "\U00000556" | // ARMENIAN CAPITAL LETTER 
+"\U00000559"                | // ARMENIAN MODIFIER LETTER LEFT HALF RING
+"\U00000561" … "\U00000587" | // ARMENIAN SMALL L
+"\U000005d0" … "\U000005ea" | // HEBREW LETTER 
+"\U000005f0" … "\U000005f2" | // HEBREW LIGATURE YIDDISH 
+"\U00000620" … "\U0000064a" | // ARABIC 
+"\U0000066e" … "\U0000066f" | // ARABIC LETTER DOTLESS 
+"\U00000671" … "\U000006d3" | // ARABIC LETTER 
+"\U000006d5"                | // ARABIC LETTER AE
+"\U000006e5" … "\U000006e6" | // ARABIC SMALL 
+"\U000006ee" … "\U000006ef" | // ARABIC LETTER 
+"\U000006fa" … "\U000006fc" | // ARABIC LETTER 
+"\U000006ff"                | // ARABIC LETTER HEH WITH INVERTED V
+"\U00000710"                | // SYRIAC LETTER ALAPH
+"\U00000712" … "\U0000072f" | // SYRIAC LETTER 
+"\U0000074d" … "\U000007a5" | // ?
+"\U000007b1"                | // THAANA LETTER NAA
+"\U000007ca" … "\U000007ea" | // NKO LETTER 
+"\U000007f4" … "\U000007f5" | // NKO 
+"\U000007fa"                | // NKO LAJANYALAN
+"\U00000800" … "\U00000815" | // SAMARITAN LETTER 
+"\U0000081a"                | // SAMARITAN MODIFIER LETTER EPENTHETIC YUT
+"\U00000824"                | // SAMARITAN MODIFIER LETTER SHORT A
+"\U00000828"                | // SAMARITAN MODIFIER LETTER I
+"\U00000840" … "\U00000858" | // MANDAIC LETTER 
+"\U000008a0" … "\U000008b4" | // ARABIC LETTER 
+"\U00000904" … "\U00000939" | // DEVANAGARI LETTER 
+"\U0000093d"                | // DEVANAGARI SIGN AVAGRAHA
+"\U00000950"                | // DEVANAGARI OM
+"\U00000958" … "\U00000961" | // DEVANAGARI LETTER 
+"\U00000971" … "\U00000980" | // ?
+"\U00000985" … "\U0000098c" | // BENGALI LETTER 
+"\U0000098f" … "\U00000990" | // BENGALI LETTER 
+"\U00000993" … "\U000009a8" | // BENGALI LETTER 
+"\U000009aa" … "\U000009b0" | // BENGALI LETTER 
+"\U000009b2"                | // BENGALI LETTER LA
+"\U000009b6" … "\U000009b9" | // BENGALI LETTER 
+"\U000009bd"                | // BENGALI SIGN AVAGRAHA
+"\U000009ce"                | // BENGALI LETTER KHANDA TA
+"\U000009dc" … "\U000009dd" | // BENGALI LETTER R
+"\U000009df" … "\U000009e1" | // BENGALI LETTER 
+"\U000009f0" … "\U000009f1" | // BENGALI LETTER RA WITH 
+"\U00000a05" … "\U00000a0a" | // GURMUKHI LETTER 
+"\U00000a0f" … "\U00000a10" | // GURMUKHI LETTER 
+"\U00000a13" … "\U00000a28" | // GURMUKHI LETTER 
+"\U00000a2a" … "\U00000a30" | // GURMUKHI LETTER 
+"\U00000a32" … "\U00000a33" | // GURMUKHI LETTER L
+"\U00000a35" … "\U00000a36" | // GURMUKHI LETTER 
+"\U00000a38" … "\U00000a39" | // GURMUKHI LETTER 
+"\U00000a59" … "\U00000a5c" | // GURMUKHI LETTER 
+"\U00000a5e"                | // GURMUKHI LETTER FA
+"\U00000a72" … "\U00000a74" | // GURMUKHI 
+"\U00000a85" … "\U00000a8d" | // GUJARATI 
+"\U00000a8f" … "\U00000a91" | // GUJARATI 
+"\U00000a93" … "\U00000aa8" | // GUJARATI LETTER 
+"\U00000aaa" … "\U00000ab0" | // GUJARATI LETTER 
+"\U00000ab2" … "\U00000ab3" | // GUJARATI LETTER L
+"\U00000ab5" … "\U00000ab9" | // GUJARATI LETTER 
+"\U00000abd"                | // GUJARATI SIGN AVAGRAHA
+"\U00000ad0"                | // GUJARATI OM
+"\U00000ae0" … "\U00000ae1" | // GUJARATI LETTER VOCALIC 
+"\U00000af9"                | // GUJARATI LETTER ZHA
+"\U00000b05" … "\U00000b0c" | // ORIYA LETTER 
+"\U00000b0f" … "\U00000b10" | // ORIYA LETTER 
+"\U00000b13" … "\U00000b28" | // ORIYA LETTER 
+"\U00000b2a" … "\U00000b30" | // ORIYA LETTER 
+"\U00000b32" … "\U00000b33" | // ORIYA LETTER L
+"\U00000b35" … "\U00000b39" | // ORIYA LETTER 
+"\U00000b3d"                | // ORIYA SIGN AVAGRAHA
+"\U00000b5c" … "\U00000b5d" | // ORIYA LETTER R
+"\U00000b5f" … "\U00000b61" | // ORIYA LETTER 
+"\U00000b71"                | // ORIYA LETTER WA
+"\U00000b83"                | // TAMIL SIGN VISARGA
+"\U00000b85" … "\U00000b8a" | // TAMIL LETTER 
+"\U00000b8e" … "\U00000b90" | // TAMIL LETTER 
+"\U00000b92" … "\U00000b95" | // TAMIL LETTER 
+"\U00000b99" … "\U00000b9a" | // TAMIL LETTER 
+"\U00000b9c"                | // TAMIL LETTER JA
+"\U00000b9e" … "\U00000b9f" | // TAMIL LETTER 
+"\U00000ba3" … "\U00000ba4" | // TAMIL LETTER 
+"\U00000ba8" … "\U00000baa" | // TAMIL LETTER 
+"\U00000bae" … "\U00000bb9" | // TAMIL LETTER 
+"\U00000bd0"                | // TAMIL OM
+"\U00000c05" … "\U00000c0c" | // TELUGU LETTER 
+"\U00000c0e" … "\U00000c10" | // TELUGU LETTER 
+"\U00000c12" … "\U00000c28" | // TELUGU LETTER 
+"\U00000c2a" … "\U00000c39" | // TELUGU LETTER 
+"\U00000c3d"                | // TELUGU SIGN AVAGRAHA
+"\U00000c58" … "\U00000c5a" | // TELUGU LETTER 
+"\U00000c60" … "\U00000c61" | // TELUGU LETTER VOCALIC 
+"\U00000c85" … "\U00000c8c" | // KANNADA LETTER 
+"\U00000c8e" … "\U00000c90" | // KANNADA LETTER 
+"\U00000c92" … "\U00000ca8" | // KANNADA LETTER 
+"\U00000caa" … "\U00000cb3" | // KANNADA LETTER 
+"\U00000cb5" … "\U00000cb9" | // KANNADA LETTER 
+"\U00000cbd"                | // KANNADA SIGN AVAGRAHA
+"\U00000cde"                | // KANNADA LETTER FA
+"\U00000ce0" … "\U00000ce1" | // KANNADA LETTER VOCALIC 
+"\U00000cf1" … "\U00000cf2" | // KANNADA SIGN 
+"\U00000d05" … "\U00000d0c" | // MALAYALAM LETTER 
+"\U00000d0e" … "\U00000d10" | // MALAYALAM LETTER 
+"\U00000d12" … "\U00000d3a" | // MALAYALAM LETTER 
+"\U00000d3d"                | // MALAYALAM SIGN AVAGRAHA
+"\U00000d4e"                | // MALAYALAM LETTER DOT REPH
+"\U00000d5f" … "\U00000d61" | // MALAYALAM LETTER 
+"\U00000d7a" … "\U00000d7f" | // MALAYALAM LETTER CHILLU 
+"\U00000d85" … "\U00000d96" | // SINHALA LETTER 
+"\U00000d9a" … "\U00000db1" | // SINHALA LETTER 
+"\U00000db3" … "\U00000dbb" | // SINHALA LETTER 
+"\U00000dbd"                | // SINHALA LETTER DANTAJA LAYANNA
+"\U00000dc0" … "\U00000dc6" | // SINHALA LETTER 
+"\U00000e01" … "\U00000e30" | // THAI CHARACTER 
+"\U00000e32" … "\U00000e33" | // THAI CHARACTER SARA A
+"\U00000e40" … "\U00000e46" | // THAI CHARACTER 
+"\U00000e81" … "\U00000e82" | // LAO LETTER K
+"\U00000e84"                | // LAO LETTER KHO TAM
+"\U00000e87" … "\U00000e88" | // LAO LETTER 
+"\U00000e8a"                | // LAO LETTER SO TAM
+"\U00000e8d"                | // LAO LETTER NYO
+"\U00000e94" … "\U00000e97" | // LAO LETTER 
+"\U00000e99" … "\U00000e9f" | // LAO LETTER 
+"\U00000ea1" … "\U00000ea3" | // LAO LETTER 
+"\U00000ea5"                | // LAO LETTER LO LOOT
+"\U00000ea7"                | // LAO LETTER WO
+"\U00000eaa" … "\U00000eab" | // LAO LETTER 
+"\U00000ead" … "\U00000eb0" | // LAO 
+"\U00000eb2" … "\U00000eb3" | // LAO VOWEL SIGN A
+"\U00000ebd"                | // LAO SEMIVOWEL SIGN NYO
+"\U00000ec0" … "\U00000ec4" | // LAO VOWEL SIGN 
+"\U00000ec6"                | // LAO KO LA
+"\U00000edc" … "\U00000edf" | // LAO 
+"\U00000f00"                | // TIBETAN SYLLABLE OM
+"\U00000f40" … "\U00000f47" | // TIBETAN LETTER 
+"\U00000f49" … "\U00000f6c" | // TIBETAN LETTER 
+"\U00000f88" … "\U00000f8c" | // TIBETAN SIGN 
+"\U00001000" … "\U0000102a" | // MYANMAR LETTER 
+"\U0000103f"                | // MYANMAR LETTER GREAT SA
+"\U00001050" … "\U00001055" | // MYANMAR LETTER 
+"\U0000105a" … "\U0000105d" | // MYANMAR LETTER MON 
+"\U00001061"                | // MYANMAR LETTER SGAW KAREN SHA
+"\U00001065" … "\U00001066" | // MYANMAR LETTER WESTERN PWO KAREN 
+"\U0000106e" … "\U00001070" | // MYANMAR LETTER EASTERN PWO KAREN 
+"\U00001075" … "\U00001081" | // MYANMAR LETTER SHAN 
+"\U0000108e"                | // MYANMAR LETTER RUMAI PALAUNG FA
+"\U000010a0" … "\U000010c5" | // GEORGIAN CAPITAL LETTER 
+"\U000010c7"                | // GEORGIAN CAPITAL LETTER YN
+"\U000010cd"                | // GEORGIAN CAPITAL LETTER AEN
+"\U000010d0" … "\U000010fa" | // GEORGIAN LETTER 
+"\U000010fc" … "\U00001248" | // ?
+"\U0000124a" … "\U0000124d" | // ETHIOPIC SYLLABLE QW
+"\U00001250" … "\U00001256" | // ETHIOPIC SYLLABLE QH
+"\U00001258"                | // ETHIOPIC SYLLABLE QHWA
+"\U0000125a" … "\U0000125d" | // ETHIOPIC SYLLABLE QHW
+"\U00001260" … "\U00001288" | // ETHIOPIC SYLLABLE 
+"\U0000128a" … "\U0000128d" | // ETHIOPIC SYLLABLE XW
+"\U00001290" … "\U000012b0" | // ETHIOPIC SYLLABLE 
+"\U000012b2" … "\U000012b5" | // ETHIOPIC SYLLABLE KW
+"\U000012b8" … "\U000012be" | // ETHIOPIC SYLLABLE KX
+"\U000012c0"                | // ETHIOPIC SYLLABLE KXWA
+"\U000012c2" … "\U000012c5" | // ETHIOPIC SYLLABLE KXW
+"\U000012c8" … "\U000012d6" | // ETHIOPIC SYLLABLE 
+"\U000012d8" … "\U00001310" | // ETHIOPIC SYLLABLE 
+"\U00001312" … "\U00001315" | // ETHIOPIC SYLLABLE GW
+"\U00001318" … "\U0000135a" | // ETHIOPIC SYLLABLE 
+"\U00001380" … "\U0000138f" | // ETHIOPIC SYLLABLE 
+"\U000013a0" … "\U000013f5" | // CHEROKEE LETTER 
+"\U000013f8" … "\U000013fd" | // CHEROKEE SMALL LETTER 
+"\U00001401" … "\U0000166c" | // CANADIAN SYLLABICS 
+"\U0000166f" … "\U0000167f" | // CANADIAN SYLLABICS 
+"\U00001681" … "\U0000169a" | // OGHAM LETTER 
+"\U000016a0" … "\U000016ea" | // RUNIC LETTER 
+"\U000016ee" … "\U000016f8" | // RUNIC 
+"\U00001700" … "\U0000170c" | // TAGALOG LETTER 
+"\U0000170e" … "\U00001711" | // TAGALOG LETTER 
+"\U00001720" … "\U00001731" | // HANUNOO LETTER 
+"\U00001740" … "\U00001751" | // BUHID LETTER 
+"\U00001760" … "\U0000176c" | // TAGBANWA LETTER 
+"\U0000176e" … "\U00001770" | // TAGBANWA LETTER 
+"\U00001780" … "\U000017b3" | // KHMER 
+"\U000017d7"                | // KHMER SIGN LEK TOO
+"\U000017dc"                | // KHMER SIGN AVAKRAHASANYA
+"\U00001820" … "\U00001877" | // MONGOLIAN LETTER 
+"\U00001880" … "\U000018a8" | // MONGOLIAN LETTER 
+"\U000018aa"                | // MONGOLIAN LETTER MANCHU ALI GALI LHA
+"\U000018b0" … "\U000018f5" | // CANADIAN SYLLABICS 
+"\U00001900" … "\U0000191e" | // LIMBU 
+"\U00001950" … "\U0000196d" | // TAI LE LETTER 
+"\U00001970" … "\U00001974" | // TAI LE LETTER TONE-
+"\U00001980" … "\U000019ab" | // NEW TAI LUE LETTER 
+"\U000019b0" … "\U000019c9" | // NEW TAI LUE 
+"\U00001a00" … "\U00001a16" | // BUGINESE LETTER 
+"\U00001a20" … "\U00001a54" | // TAI THAM LETTER 
+"\U00001aa7"                | // TAI THAM SIGN MAI YAMOK
+"\U00001b05" … "\U00001b33" | // BALINESE LETTER 
+"\U00001b45" … "\U00001b4b" | // BALINESE LETTER 
+"\U00001b83" … "\U00001ba0" | // SUNDANESE LETTER 
+"\U00001bae" … "\U00001baf" | // SUNDANESE LETTER 
+"\U00001bba" … "\U00001be5" | // ?
+"\U00001c00" … "\U00001c23" | // LEPCHA LETTER 
+"\U00001c4d" … "\U00001c4f" | // LEPCHA LETTER 
+"\U00001c5a" … "\U00001c7d" | // OL CHIKI 
+"\U00001ce9" … "\U00001cec" | // VEDIC SIGN ANUSVARA 
+"\U00001cee" … "\U00001cf1" | // VEDIC SIGN 
+"\U00001cf5" … "\U00001cf6" | // VEDIC SIGN 
+"\U00001d00" … "\U00001dbf" | // ?
+"\U00001e00" … "\U00001f15" | // ?
+"\U00001f18" … "\U00001f1d" | // GREEK CAPITAL LETTER EPSILON WITH 
+"\U00001f20" … "\U00001f45" | // GREEK 
+"\U00001f48" … "\U00001f4d" | // GREEK CAPITAL LETTER OMICRON WITH 
+"\U00001f50" … "\U00001f57" | // GREEK SMALL LETTER UPSILON WITH 
+"\U00001f59"                | // GREEK CAPITAL LETTER UPSILON WITH DASIA
+"\U00001f5b"                | // GREEK CAPITAL LETTER UPSILON WITH DASIA AND VARIA
+"\U00001f5d"                | // GREEK CAPITAL LETTER UPSILON WITH DASIA AND OXIA
+"\U00001f5f" … "\U00001f7d" | // GREEK 
+"\U00001f80" … "\U00001fb4" | // GREEK 
+"\U00001fb6" … "\U00001fbc" | // GREEK 
+"\U00001fbe"                | // GREEK PROSGEGRAMMENI
+"\U00001fc2" … "\U00001fc4" | // GREEK SMALL LETTER ETA WITH 
+"\U00001fc6" … "\U00001fcc" | // GREEK 
+"\U00001fd0" … "\U00001fd3" | // GREEK SMALL LETTER IOTA WITH 
+"\U00001fd6" … "\U00001fdb" | // GREEK 
+"\U00001fe0" … "\U00001fec" | // GREEK 
+"\U00001ff2" … "\U00001ff4" | // GREEK SMALL LETTER OMEGA WITH 
+"\U00001ff6" … "\U00001ffc" | // GREEK 
+"\U00002071"                | // SUPERSCRIPT LATIN SMALL LETTER I
+"\U0000207f"                | // SUPERSCRIPT LATIN SMALL LETTER N
+"\U00002090" … "\U0000209c" | // LATIN SUBSCRIPT SMALL LETTER 
+"\U00002102"                | // DOUBLE-STRUCK CAPITAL C
+"\U00002107"                | // EULER CONSTANT
+"\U0000210a" … "\U00002113" | // ?
+"\U00002115"                | // DOUBLE-STRUCK CAPITAL N
+"\U00002119" … "\U0000211d" | // ?
+"\U00002124"                | // DOUBLE-STRUCK CAPITAL Z
+"\U00002126"                | // OHM SIGN
+"\U00002128"                | // BLACK-LETTER CAPITAL Z
+"\U0000212a" … "\U0000212d" | // ?
+"\U0000212f" … "\U00002139" | // ?
+"\U0000213c" … "\U0000213f" | // DOUBLE-STRUCK 
+"\U00002145" … "\U00002149" | // DOUBLE-STRUCK ITALIC 
+"\U0000214e"                | // TURNED SMALL F
+"\U00002160" … "\U00002188" | // ?
+"\U00002c00" … "\U00002c2e" | // GLAGOLITIC CAPITAL LETTER 
+"\U00002c30" … "\U00002c5e" | // GLAGOLITIC SMALL LETTER 
+"\U00002c60" … "\U00002ce4" | // ?
+"\U00002ceb" … "\U00002cee" | // COPTIC 
+"\U00002cf2" … "\U00002cf3" | // COPTIC 
+"\U00002d00" … "\U00002d25" | // GEORGIAN SMALL LETTER 
+"\U00002d27"                | // GEORGIAN SMALL LETTER YN
+"\U00002d2d"                | // GEORGIAN SMALL LETTER AEN
+"\U00002d30" … "\U00002d67" | // TIFINAGH LETTER 
+"\U00002d6f"                | // TIFINAGH MODIFIER LETTER LABIALIZATION MARK
+"\U00002d80" … "\U00002d96" | // ETHIOPIC SYLLABLE 
+"\U00002da0" … "\U00002da6" | // ETHIOPIC SYLLABLE SS
+"\U00002da8" … "\U00002dae" | // ETHIOPIC SYLLABLE CC
+"\U00002db0" … "\U00002db6" | // ETHIOPIC SYLLABLE ZZ
+"\U00002db8" … "\U00002dbe" | // ETHIOPIC SYLLABLE CCH
+"\U00002dc0" … "\U00002dc6" | // ETHIOPIC SYLLABLE QY
+"\U00002dc8" … "\U00002dce" | // ETHIOPIC SYLLABLE KY
+"\U00002dd0" … "\U00002dd6" | // ETHIOPIC SYLLABLE XY
+"\U00002dd8" … "\U00002dde" | // ETHIOPIC SYLLABLE GY
+"\U00002e2f"                | // VERTICAL TILDE
+"\U00003005" … "\U00003007" | // IDEOGRAPHIC 
+"\U00003021" … "\U00003029" | // HANGZHOU NUMERAL 
+"\U00003031" … "\U00003035" | // VERTICAL KANA REPEAT 
+"\U00003038" … "\U0000303c" | // ?
+"\U00003041" … "\U00003096" | // HIRAGANA LETTER 
+"\U0000309d" … "\U0000309f" | // HIRAGANA 
+"\U000030a1" … "\U000030fa" | // KATAKANA LETTER 
+"\U000030fc" … "\U000030ff" | // KATAKANA
+"\U00003105" … "\U0000312d" | // BOPOMOFO LETTER 
+"\U00003131" … "\U0000318e" | // HANGUL 
+"\U000031a0" … "\U000031ba" | // BOPOMOFO 
+"\U000031f0" … "\U000031ff" | // KATAKANA LETTER SMALL 
+"\U00003400"                | // <CJK Ideograph Extension A, First>
+"\U00004db5"                | // <CJK Ideograph Extension A, Last>
+"\U00004e00"                | // <CJK Ideograph, First>
+"\U00009fd5"                | // <CJK Ideograph, Last>
+"\U0000a000" … "\U0000a48c" | // YI SYLLABLE 
+"\U0000a4d0" … "\U0000a4fd" | // LISU LETTER 
+"\U0000a500" … "\U0000a60c" | // VAI SYLLABLE 
+"\U0000a610" … "\U0000a61f" | // VAI SY
+"\U0000a62a" … "\U0000a62b" | // VAI SYLLABLE NDOLE 
+"\U0000a640" … "\U0000a66e" | // CYRILLIC 
+"\U0000a67f" … "\U0000a69d" | // ?
+"\U0000a6a0" … "\U0000a6ef" | // BAMUM LETTER 
+"\U0000a717" … "\U0000a71f" | // MODIFIER LETTER 
+"\U0000a722" … "\U0000a788" | // ?
+"\U0000a78b" … "\U0000a7ad" | // LATIN 
+"\U0000a7b0" … "\U0000a7b7" | // LATIN 
+"\U0000a7f7" … "\U0000a801" | // ?
+"\U0000a803" … "\U0000a805" | // SYLOTI NAGRI LETTER 
+"\U0000a807" … "\U0000a80a" | // SYLOTI NAGRI LETTER 
+"\U0000a80c" … "\U0000a822" | // SYLOTI NAGRI LETTER 
+"\U0000a840" … "\U0000a873" | // PHAGS-PA 
+"\U0000a882" … "\U0000a8b3" | // SAURASHTRA LETTER 
+"\U0000a8f2" … "\U0000a8f7" | // DEVANAGARI SIGN 
+"\U0000a8fb"                | // DEVANAGARI HEADSTROKE
+"\U0000a8fd"                | // DEVANAGARI JAIN OM
+"\U0000a90a" … "\U0000a925" | // KAYAH LI LETTER 
+"\U0000a930" … "\U0000a946" | // REJANG LETTER 
+"\U0000a960" … "\U0000a97c" | // HANGUL CHOSEONG 
+"\U0000a984" … "\U0000a9b2" | // JAVANESE LETTER 
+"\U0000a9cf"                | // JAVANESE PANGRANGKEP
+"\U0000a9e0" … "\U0000a9e4" | // MYANMAR LETTER SHAN 
+"\U0000a9e6" … "\U0000a9ef" | // MYANMAR 
+"\U0000a9fa" … "\U0000a9fe" | // MYANMAR LETTER TAI LAING 
+"\U0000aa00" … "\U0000aa28" | // CHAM LETTER 
+"\U0000aa40" … "\U0000aa42" | // CHAM LETTER FINAL 
+"\U0000aa44" … "\U0000aa4b" | // CHAM LETTER FINAL 
+"\U0000aa60" … "\U0000aa76" | // MYANMAR 
+"\U0000aa7a"                | // MYANMAR LETTER AITON RA
+"\U0000aa7e" … "\U0000aaaf" | // ?
+"\U0000aab1"                | // TAI VIET VOWEL AA
+"\U0000aab5" … "\U0000aab6" | // TAI VIET VOWEL 
+"\U0000aab9" … "\U0000aabd" | // TAI VIET VOWEL 
+"\U0000aac0"                | // TAI VIET TONE MAI NUENG
+"\U0000aac2"                | // TAI VIET TONE MAI SONG
+"\U0000aadb" … "\U0000aadd" | // TAI VIET SYMBOL 
+"\U0000aae0" … "\U0000aaea" | // MEETEI MAYEK LETTER 
+"\U0000aaf2" … "\U0000aaf4" | // MEETEI MAYEK 
+"\U0000ab01" … "\U0000ab06" | // ETHIOPIC SYLLABLE TTH
+"\U0000ab09" … "\U0000ab0e" | // ETHIOPIC SYLLABLE DDH
+"\U0000ab11" … "\U0000ab16" | // ETHIOPIC SYLLABLE DZ
+"\U0000ab20" … "\U0000ab26" | // ETHIOPIC SYLLABLE CCHH
+"\U0000ab28" … "\U0000ab2e" | // ETHIOPIC SYLLABLE BB
+"\U0000ab30" … "\U0000ab5a" | // LATIN 
+"\U0000ab5c" … "\U0000ab65" | // ?
+"\U0000ab70" … "\U0000abe2" | // ?
+"\U0000ac00"                | // <Hangul Syllable, First>
+"\U0000d7a3"                | // <Hangul Syllable, Last>
+"\U0000d7b0" … "\U0000d7c6" | // HANGUL JUNGSEONG 
+"\U0000d7cb" … "\U0000d7fb" | // HANGUL JONGSEONG 
+"\U0000f900" … "\U0000fa6d" | // CJK COMPATIBILITY IDEOGRAPH-F
+"\U0000fa70" … "\U0000fad9" | // CJK COMPATIBILITY IDEOGRAPH-FA
+"\U0000fb00" … "\U0000fb06" | // LATIN SMALL LIGATURE 
+"\U0000fb13" … "\U0000fb17" | // ARMENIAN SMALL LIGATURE 
+"\U0000fb1d"                | // HEBREW LETTER YOD WITH HIRIQ
+"\U0000fb1f" … "\U0000fb28" | // HEBREW L
+"\U0000fb2a" … "\U0000fb36" | // HEBREW LETTER 
+"\U0000fb38" … "\U0000fb3c" | // HEBREW LETTER 
+"\U0000fb3e"                | // HEBREW LETTER MEM WITH DAGESH
+"\U0000fb40" … "\U0000fb41" | // HEBREW LETTER 
+"\U0000fb43" … "\U0000fb44" | // HEBREW LETTER 
+"\U0000fb46" … "\U0000fbb1" | // ?
+"\U0000fbd3" … "\U0000fd3d" | // ARABIC L
+"\U0000fd50" … "\U0000fd8f" | // ARABIC LIGATURE 
+"\U0000fd92" … "\U0000fdc7" | // ARABIC LIGATURE 
+"\U0000fdf0" … "\U0000fdfb" | // ARABIC LIGATURE 
+"\U0000fe70" … "\U0000fe74" | // ARABIC 
+"\U0000fe76" … "\U0000fefc" | // ARABIC 
+"\U0000ff21" … "\U0000ff3a" | // FULLWIDTH LATIN CAPITAL LETTER 
+"\U0000ff41" … "\U0000ff5a" | // FULLWIDTH LATIN SMALL LETTER 
+"\U0000ff66" … "\U0000ffbe" | // HALFWIDTH 
+"\U0000ffc2" … "\U0000ffc7" | // HALFWIDTH HANGUL LETTER 
+"\U0000ffca" … "\U0000ffcf" | // HALFWIDTH HANGUL LETTER 
+"\U0000ffd2" … "\U0000ffd7" | // HALFWIDTH HANGUL LETTER 
+"\U0000ffda" … "\U0000ffdc" | // HALFWIDTH HANGUL LETTER 
+"\U00010000" … "\U0001000b" | // LINEAR B SYLLABLE B0
+"\U0001000d" … "\U00010026" | // LINEAR B SYLLABLE B0
+"\U00010028" … "\U0001003a" | // LINEAR B SYLLABLE B0
+"\U0001003c" … "\U0001003d" | // LINEAR B SYLLABLE B0
+"\U0001003f" … "\U0001004d" | // LINEAR B SYLLABLE B0
+"\U00010050" … "\U0001005d" | // LINEAR B SYMBOL B0
+"\U00010080" … "\U000100fa" | // LINEAR B 
+"\U00010140" … "\U00010174" | // GREEK ACROPHONIC 
+"\U00010280" … "\U0001029c" | // LYCIAN LETTER 
+"\U000102a0" … "\U000102d0" | // CARIAN LETTER 
+"\U00010300" … "\U0001031f" | // OLD ITALIC LETTER 
+"\U00010330" … "\U0001034a" | // GOTHIC LETTER 
+"\U00010350" … "\U00010375" | // OLD PERMIC LETTER 
+"\U00010380" … "\U0001039d" | // UGARITIC LETTER 
+"\U000103a0" … "\U000103c3" | // OLD PERSIAN SIGN 
+"\U000103c8" … "\U000103cf" | // OLD PERSIAN SIGN 
+"\U000103d1" … "\U000103d5" | // OLD PERSIAN NUMBER 
+"\U00010400" … "\U0001049d" | // ?
+"\U00010500" … "\U00010527" | // ELBASAN LETTER 
+"\U00010530" … "\U00010563" | // CAUCASIAN ALBANIAN LETTER 
+"\U00010600" … "\U00010736" | // LINEAR A SIGN A
+"\U00010740" … "\U00010755" | // LINEAR A SIGN A7
+"\U00010760" … "\U00010767" | // LINEAR A SIGN A80
+"\U00010800" … "\U00010805" | // CYPRIOT SYLLABLE 
+"\U00010808"                | // CYPRIOT SYLLABLE JO
+"\U0001080a" … "\U00010835" | // CYPRIOT SYLLABLE 
+"\U00010837" … "\U00010838" | // CYPRIOT SYLLABLE X
+"\U0001083c"                | // CYPRIOT SYLLABLE ZA
+"\U0001083f" … "\U00010855" | // ?
+"\U00010860" … "\U00010876" | // PALMYRENE LETTER 
+"\U00010880" … "\U0001089e" | // NABATAEAN LETTER 
+"\U000108e0" … "\U000108f2" | // HATRAN LETTER 
+"\U000108f4" … "\U000108f5" | // HATRAN LETTER 
+"\U00010900" … "\U00010915" | // PHOENICIAN LETTER 
+"\U00010920" … "\U00010939" | // LYDIAN LETTER 
+"\U00010980" … "\U000109b7" | // MEROITIC 
+"\U000109be" … "\U000109bf" | // MEROITIC CURSIVE LOGOGRAM 
+"\U00010a00"                | // KHAROSHTHI LETTER A
+"\U00010a10" … "\U00010a13" | // KHAROSHTHI LETTER 
+"\U00010a15" … "\U00010a17" | // KHAROSHTHI LETTER 
+"\U00010a19" … "\U00010a33" | // KHAROSHTHI LETTER 
+"\U00010a60" … "\U00010a7c" | // OLD SOUTH ARABIAN LETTER 
+"\U00010a80" … "\U00010a9c" | // OLD NORTH ARABIAN LETTER 
+"\U00010ac0" … "\U00010ac7" | // MANICHAEAN LETTER 
+"\U00010ac9" … "\U00010ae4" | // MANICHAEAN LETTER 
+"\U00010b00" … "\U00010b35" | // AVESTAN LETTER 
+"\U00010b40" … "\U00010b55" | // INSCRIPTIONAL PARTHIAN LETTER 
+"\U00010b60" … "\U00010b72" | // INSCRIPTIONAL PAHLAVI LETTER 
+"\U00010b80" … "\U00010b91" | // PSALTER PAHLAVI LETTER 
+"\U00010c00" … "\U00010c48" | // OLD TURKIC LETTER 
+"\U00010c80" … "\U00010cb2" | // OLD HUNGARIAN CAPITAL LETTER 
+"\U00010cc0" … "\U00010cf2" | // OLD HUNGARIAN SMALL LETTER 
+"\U00011003" … "\U00011037" | // BRAHMI 
+"\U00011083" … "\U000110af" | // KAITHI LETTER 
+"\U000110d0" … "\U000110e8" | // SORA SOMPENG LETTER 
+"\U00011103" … "\U00011126" | // CHAKMA LETTER 
+"\U00011150" … "\U00011172" | // MAHAJANI LETTER 
+"\U00011176"                | // MAHAJANI LIGATURE SHRI
+"\U00011183" … "\U000111b2" | // SHARADA LETTER 
+"\U000111c1" … "\U000111c4" | // SHARADA 
+"\U000111da"                | // SHARADA EKAM
+"\U000111dc"                | // SHARADA HEADSTROKE
+"\U00011200" … "\U00011211" | // KHOJKI LETTER 
+"\U00011213" … "\U0001122b" | // KHOJKI LETTER 
+"\U00011280" … "\U00011286" | // MULTANI LETTER 
+"\U00011288"                | // MULTANI LETTER GHA
+"\U0001128a" … "\U0001128d" | // MULTANI LETTER 
+"\U0001128f" … "\U0001129d" | // MULTANI LETTER 
+"\U0001129f" … "\U000112a8" | // MULTANI LETTER 
+"\U000112b0" … "\U000112de" | // KHUDAWADI LETTER 
+"\U00011305" … "\U0001130c" | // GRANTHA LETTER 
+"\U0001130f" … "\U00011310" | // GRANTHA LETTER 
+"\U00011313" … "\U00011328" | // GRANTHA LETTER 
+"\U0001132a" … "\U00011330" | // GRANTHA LETTER 
+"\U00011332" … "\U00011333" | // GRANTHA LETTER L
+"\U00011335" … "\U00011339" | // GRANTHA LETTER 
+"\U0001133d"                | // GRANTHA SIGN AVAGRAHA
+"\U00011350"                | // GRANTHA OM
+"\U0001135d" … "\U00011361" | // GRANTHA 
+"\U00011480" … "\U000114af" | // TIRHUTA 
+"\U000114c4" … "\U000114c5" | // TIRHUTA 
+"\U000114c7"                | // TIRHUTA OM
+"\U00011580" … "\U000115ae" | // SIDDHAM LETTER 
+"\U000115d8" … "\U000115db" | // SIDDHAM LETTER 
+"\U00011600" … "\U0001162f" | // MODI LETTER 
+"\U00011644"                | // MODI SIGN HUVA
+"\U00011680" … "\U000116aa" | // TAKRI LETTER 
+"\U00011700" … "\U00011719" | // AHOM LETTER 
+"\U000118a0" … "\U000118df" | // WARANG CITI 
+"\U000118ff"                | // WARANG CITI OM
+"\U00011ac0" … "\U00011af8" | // PAU CIN HAU 
+"\U00012000" … "\U00012399" | // CUNEIFORM SIGN 
+"\U00012400" … "\U0001246e" | // CUNEIFORM NUMERIC SIGN 
+"\U00012480" … "\U00012543" | // CUNEIFORM SIGN 
+"\U00013000" … "\U0001342e" | // EGYPTIAN HIEROGLYPH 
+"\U00014400" … "\U00014646" | // ANATOLIAN HIEROGLYPH A
+"\U00016800" … "\U00016a38" | // BAMUM LETTER PHASE-
+"\U00016a40" … "\U00016a5e" | // MRO LETTER 
+"\U00016ad0" … "\U00016aed" | // BASSA VAH LETTER 
+"\U00016b00" … "\U00016b2f" | // PAHAWH HMONG 
+"\U00016b40" … "\U00016b43" | // PAHAWH HMONG SIGN 
+"\U00016b63" … "\U00016b77" | // PAHAWH HMONG SIGN 
+"\U00016b7d" … "\U00016b8f" | // PAHAWH HMONG CLAN SIGN 
+"\U00016f00" … "\U00016f44" | // MIAO LETTER 
+"\U00016f50"                | // MIAO LETTER NASALIZATION
+"\U00016f93" … "\U00016f9f" | // MIAO LETTER 
+"\U0001b000" … "\U0001b001" | // ?
+"\U0001bc00" … "\U0001bc6a" | // DUPLOYAN LETTER 
+"\U0001bc70" … "\U0001bc7c" | // DUPLOYAN AFFIX 
+"\U0001bc80" … "\U0001bc88" | // DUPLOYAN AFFIX HIGH 
+"\U0001bc90" … "\U0001bc99" | // DUPLOYAN AFFIX LOW 
+"\U0001d400" … "\U0001d454" | // MATHEMATICAL 
+"\U0001d456" … "\U0001d49c" | // MATHEMATICAL 
+"\U0001d49e" … "\U0001d49f" | // MATHEMATICAL SCRIPT CAPITAL 
+"\U0001d4a2"                | // MATHEMATICAL SCRIPT CAPITAL G
+"\U0001d4a5" … "\U0001d4a6" | // MATHEMATICAL SCRIPT CAPITAL 
+"\U0001d4a9" … "\U0001d4ac" | // MATHEMATICAL SCRIPT CAPITAL 
+"\U0001d4ae" … "\U0001d4b9" | // MATHEMATICAL SCRIPT 
+"\U0001d4bb"                | // MATHEMATICAL SCRIPT SMALL F
+"\U0001d4bd" … "\U0001d4c3" | // MATHEMATICAL SCRIPT SMALL 
+"\U0001d4c5" … "\U0001d505" | // MATHEMATICAL 
+"\U0001d507" … "\U0001d50a" | // MATHEMATICAL FRAKTUR CAPITAL 
+"\U0001d50d" … "\U0001d514" | // MATHEMATICAL FRAKTUR CAPITAL 
+"\U0001d516" … "\U0001d51c" | // MATHEMATICAL FRAKTUR CAPITAL 
+"\U0001d51e" … "\U0001d539" | // MATHEMATICAL 
+"\U0001d53b" … "\U0001d53e" | // MATHEMATICAL DOUBLE-STRUCK CAPITAL 
+"\U0001d540" … "\U0001d544" | // MATHEMATICAL DOUBLE-STRUCK CAPITAL 
+"\U0001d546"                | // MATHEMATICAL DOUBLE-STRUCK CAPITAL O
+"\U0001d54a" … "\U0001d550" | // MATHEMATICAL DOUBLE-STRUCK CAPITAL 
+"\U0001d552" … "\U0001d6a5" | // MATHEMATICAL 
+"\U0001d6a8" … "\U0001d6c0" | // MATHEMATICAL BOLD CAPITAL 
+"\U0001d6c2" … "\U0001d6da" | // MATHEMATICAL BOLD SMALL 
+"\U0001d6dc" … "\U0001d6fa" | // MATHEMATICAL 
+"\U0001d6fc" … "\U0001d714" | // MATHEMATICAL ITALIC SMALL 
+"\U0001d716" … "\U0001d734" | // MATHEMATICAL 
+"\U0001d736" … "\U0001d74e" | // MATHEMATICAL BOLD ITALIC SMALL 
+"\U0001d750" … "\U0001d76e" | // MATHEMATICAL 
+"\U0001d770" … "\U0001d788" | // MATHEMATICAL SANS-SERIF BOLD SMALL 
+"\U0001d78a" … "\U0001d7a8" | // MATHEMATICAL SANS-SERIF BOLD 
+"\U0001d7aa" … "\U0001d7c2" | // MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL 
+"\U0001d7c4" … "\U0001d7cb" | // MATHEMATICAL 
+"\U0001e800" … "\U0001e8c4" | // MENDE KIKAKUI SYLLABLE M
+"\U0001ee00" … "\U0001ee03" | // ARABIC MATHEMATICAL 
+"\U0001ee05" … "\U0001ee1f" | // ARABIC MATHEMATICAL 
+"\U0001ee21" … "\U0001ee22" | // ARABIC MATHEMATICAL INITIAL 
+"\U0001ee24"                | // ARABIC MATHEMATICAL INITIAL HEH
+"\U0001ee27"                | // ARABIC MATHEMATICAL INITIAL HAH
+"\U0001ee29" … "\U0001ee32" | // ARABIC MATHEMATICAL INITIAL 
+"\U0001ee34" … "\U0001ee37" | // ARABIC MATHEMATICAL INITIAL 
+"\U0001ee39"                | // ARABIC MATHEMATICAL INITIAL DAD
+"\U0001ee3b"                | // ARABIC MATHEMATICAL INITIAL GHAIN
+"\U0001ee42"                | // ARABIC MATHEMATICAL TAILED JEEM
+"\U0001ee47"                | // ARABIC MATHEMATICAL TAILED HAH
+"\U0001ee49"                | // ARABIC MATHEMATICAL TAILED YEH
+"\U0001ee4b"                | // ARABIC MATHEMATICAL TAILED LAM
+"\U0001ee4d" … "\U0001ee4f" | // ARABIC MATHEMATICAL TAILED 
+"\U0001ee51" … "\U0001ee52" | // ARABIC MATHEMATICAL TAILED 
+"\U0001ee54"                | // ARABIC MATHEMATICAL TAILED SHEEN
+"\U0001ee57"                | // ARABIC MATHEMATICAL TAILED KHAH
+"\U0001ee59"                | // ARABIC MATHEMATICAL TAILED DAD
+"\U0001ee5b"                | // ARABIC MATHEMATICAL TAILED GHAIN
+"\U0001ee5d"                | // ARABIC MATHEMATICAL TAILED DOTLESS NOON
+"\U0001ee5f"                | // ARABIC MATHEMATICAL TAILED DOTLESS QAF
+"\U0001ee61" … "\U0001ee62" | // ARABIC MATHEMATICAL STRETCHED 
+"\U0001ee64"                | // ARABIC MATHEMATICAL STRETCHED HEH
+"\U0001ee67" … "\U0001ee6a" | // ARABIC MATHEMATICAL STRETCHED 
+"\U0001ee6c" … "\U0001ee72" | // ARABIC MATHEMATICAL STRETCHED 
+"\U0001ee74" … "\U0001ee77" | // ARABIC MATHEMATICAL STRETCHED 
+"\U0001ee79" … "\U0001ee7c" | // ARABIC MATHEMATICAL STRETCHED 
+"\U0001ee7e"                | // ARABIC MATHEMATICAL STRETCHED DOTLESS FEH
+"\U0001ee80" … "\U0001ee89" | // ARABIC MATHEMATICAL LOOPED 
+"\U0001ee8b" … "\U0001ee9b" | // ARABIC MATHEMATICAL LOOPED 
+"\U0001eea1" … "\U0001eea3" | // ARABIC MATHEMATICAL DOUBLE-STRUCK 
+"\U0001eea5" … "\U0001eea9" | // ARABIC MATHEMATICAL DOUBLE-STRUCK 
+"\U0001eeab" … "\U0001eebb" | // ARABIC MATHEMATICAL DOUBLE-STRUCK 
+"\U00020000"                | // <CJK Ideograph Extension B, First>
+"\U0002a6d6"                | // <CJK Ideograph Extension B, Last>
+"\U0002a700"                | // <CJK Ideograph Extension C, First>
+"\U0002b734"                | // <CJK Ideograph Extension C, Last>
+"\U0002b740"                | // <CJK Ideograph Extension D, First>
+"\U0002b81d"                | // <CJK Ideograph Extension D, Last>
+"\U0002b820"                | // <CJK Ideograph Extension E, First>
+"\U0002cea1"                  // <CJK Ideograph Extension E, Last>
+.
+
+// a Unicode code point classified as "Decimal Digit"
+unicode_digit  =
+"\U00000030" … "\U00000039" | // DIGIT 
+"\U00000660" … "\U00000669" | // ARABIC-INDIC DIGIT 
+"\U000006f0" … "\U000006f9" | // EXTENDED ARABIC-INDIC DIGIT 
+"\U000007c0" … "\U000007c9" | // NKO DIGIT 
+"\U00000966" … "\U0000096f" | // DEVANAGARI DIGIT 
+"\U000009e6" … "\U000009ef" | // BENGALI DIGIT 
+"\U00000a66" … "\U00000a6f" | // GURMUKHI DIGIT 
+"\U00000ae6" … "\U00000aef" | // GUJARATI DIGIT 
+"\U00000b66" … "\U00000b6f" | // ORIYA DIGIT 
+"\U00000be6" … "\U00000bef" | // TAMIL DIGIT 
+"\U00000c66" … "\U00000c6f" | // TELUGU DIGIT 
+"\U00000ce6" … "\U00000cef" | // KANNADA DIGIT 
+"\U00000d66" … "\U00000d6f" | // MALAYALAM DIGIT 
+"\U00000de6" … "\U00000def" | // SINHALA LITH DIGIT 
+"\U00000e50" … "\U00000e59" | // THAI DIGIT 
+"\U00000ed0" … "\U00000ed9" | // LAO DIGIT 
+"\U00000f20" … "\U00000f29" | // TIBETAN DIGIT 
+"\U00001040" … "\U00001049" | // MYANMAR DIGIT 
+"\U00001090" … "\U00001099" | // MYANMAR SHAN DIGIT 
+"\U000017e0" … "\U000017e9" | // KHMER DIGIT 
+"\U00001810" … "\U00001819" | // MONGOLIAN DIGIT 
+"\U00001946" … "\U0000194f" | // LIMBU DIGIT 
+"\U000019d0" … "\U000019d9" | // NEW TAI LUE DIGIT 
+"\U00001a80" … "\U00001a89" | // TAI THAM HORA DIGIT 
+"\U00001a90" … "\U00001a99" | // TAI THAM THAM DIGIT 
+"\U00001b50" … "\U00001b59" | // BALINESE DIGIT 
+"\U00001bb0" … "\U00001bb9" | // SUNDANESE DIGIT 
+"\U00001c40" … "\U00001c49" | // LEPCHA DIGIT 
+"\U00001c50" … "\U00001c59" | // OL CHIKI DIGIT 
+"\U0000a620" … "\U0000a629" | // VAI DIGIT 
+"\U0000a8d0" … "\U0000a8d9" | // SAURASHTRA DIGIT 
+"\U0000a900" … "\U0000a909" | // KAYAH LI DIGIT 
+"\U0000a9d0" … "\U0000a9d9" | // JAVANESE DIGIT 
+"\U0000a9f0" … "\U0000a9f9" | // MYANMAR TAI LAING DIGIT 
+"\U0000aa50" … "\U0000aa59" | // CHAM DIGIT 
+"\U0000abf0" … "\U0000abf9" | // MEETEI MAYEK DIGIT 
+"\U0000ff10" … "\U0000ff19" | // FULLWIDTH DIGIT 
+"\U000104a0" … "\U000104a9" | // OSMANYA DIGIT 
+"\U00011066" … "\U0001106f" | // BRAHMI DIGIT 
+"\U000110f0" … "\U000110f9" | // SORA SOMPENG DIGIT 
+"\U00011136" … "\U0001113f" | // CHAKMA DIGIT 
+"\U000111d0" … "\U000111d9" | // SHARADA DIGIT 
+"\U000112f0" … "\U000112f9" | // KHUDAWADI DIGIT 
+"\U000114d0" … "\U000114d9" | // TIRHUTA DIGIT 
+"\U00011650" … "\U00011659" | // MODI DIGIT 
+"\U000116c0" … "\U000116c9" | // TAKRI DIGIT 
+"\U00011730" … "\U00011739" | // AHOM DIGIT 
+"\U000118e0" … "\U000118e9" | // WARANG CITI DIGIT 
+"\U00016a60" … "\U00016a69" | // MRO DIGIT 
+"\U00016b50" … "\U00016b59"   // PAHAWH HMONG DIGIT 
+.
+
+letter        = unicode_letter | "_" .
+decimal_digit = "0" … "9" .
+octal_digit   = "0" … "7" .
+hex_digit     = "0" … "9" | "A" … "F" | "a" … "f" .
+identifier = letter { letter | unicode_digit } .
+int_lit     = decimal_lit | octal_lit | hex_lit .
+decimal_lit = ( "1" … "9" ) { decimal_digit } .
+octal_lit   = "0" { octal_digit } .
+hex_lit     = "0" ( "x" | "X" ) hex_digit { hex_digit } .
+float_lit = decimals "." [ decimals ] [ exponent ] |
+            decimals exponent |
+            "." decimals [ exponent ] .
+decimals  = decimal_digit { decimal_digit } .
+exponent  = ( "e" | "E" ) [ "+" | "-" ] decimals .
+imaginary_lit = (decimals | float_lit) "i" .
+rune_lit         = "'" ( unicode_value | byte_value ) "'" .
+unicode_value    = unicode_char | little_u_value | big_u_value | escaped_char .
+byte_value       = octal_byte_value | hex_byte_value .
+octal_byte_value = `\` octal_digit octal_digit octal_digit .
+hex_byte_value   = `\` "x" hex_digit hex_digit .
+little_u_value   = `\` "u" hex_digit hex_digit hex_digit hex_digit .
+big_u_value      = `\` "U" hex_digit hex_digit hex_digit hex_digit
+                           hex_digit hex_digit hex_digit hex_digit .
+escaped_char     = `\` ( "a" | "b" | "f" | "n" | "r" | "t" | "v" | `\` | "'" | `"` ) .
+string_lit             = raw_string_lit | interpreted_string_lit .
+raw_string_lit         = "`" { unicode_char | newline } "`" .
+interpreted_string_lit = `"` { unicode_value | byte_value } `"` .
+Type      = TypeName | TypeLit | "(" Type ")" .
+TypeName  = identifier | QualifiedIdent .
+TypeLit   = ArrayType | StructType | PointerType | FunctionType | InterfaceType |
+	    SliceType | MapType | ChannelType .
+ArrayType   = "[" ArrayLength "]" ElementType .
+ArrayLength = Expression .
+ElementType = Type .
+SliceType = "[" "]" ElementType .
+StructType     = "struct" "{" { FieldDecl ";" } "}" .
+FieldDecl      = (IdentifierList Type | AnonymousField) [ Tag ] .
+AnonymousField = [ "*" ] TypeName .
+Tag            = string_lit .
+PointerType = "*" BaseType .
+BaseType    = Type .
+FunctionType   = "func" Signature .
+Signature      = Parameters [ Result ] .
+Result         = Parameters | Type .
+Parameters     = "(" [ ParameterList [ "," ] ] ")" .
+ParameterList  = ParameterDecl { "," ParameterDecl } .
+ParameterDecl  = [ IdentifierList ] [ "..." ] Type .
+InterfaceType      = "interface" "{" { MethodSpec ";" } "}" .
+MethodSpec         = MethodName Signature | InterfaceTypeName .
+MethodName         = identifier .
+InterfaceTypeName  = TypeName .
+MapType     = "map" "[" KeyType "]" ElementType .
+KeyType     = Type .
+ChannelType = ( "chan" | "chan" "<-" | "<-" "chan" ) ElementType .
+Block = "{" StatementList "}" .
+StatementList = { Statement ";" } .
+Declaration   = ConstDecl | TypeDecl | VarDecl .
+TopLevelDecl  = Declaration | FunctionDecl | MethodDecl .
+ConstDecl      = "const" ( ConstSpec | "(" { ConstSpec ";" } ")" ) .
+ConstSpec      = IdentifierList [ [ Type ] "=" ExpressionList ] .
+IdentifierList = identifier { "," identifier } .
+ExpressionList = Expression { "," Expression } .
+TypeDecl     = "type" ( TypeSpec | "(" { TypeSpec ";" } ")" ) .
+TypeSpec     = identifier Type .
+VarDecl     = "var" ( VarSpec | "(" { VarSpec ";" } ")" ) .
+VarSpec     = IdentifierList ( Type [ "=" ExpressionList ] | "=" ExpressionList ) .
+ShortVarDecl = IdentifierList ":=" ExpressionList .
+FunctionDecl = "func" FunctionName ( Function | Signature ) .
+FunctionName = identifier .
+Function     = Signature FunctionBody .
+FunctionBody = Block .
+MethodDecl   = "func" Receiver MethodName ( Function | Signature ) .
+Receiver     = Parameters .
+Operand     = Literal | OperandName | MethodExpr | "(" Expression ")" .
+Literal     = BasicLit | CompositeLit | FunctionLit .
+BasicLit    = int_lit | float_lit | imaginary_lit | rune_lit | string_lit .
+OperandName = identifier | QualifiedIdent.
+QualifiedIdent = PackageName "." identifier .
+CompositeLit  = LiteralType LiteralValue .
+LiteralType   = StructType | ArrayType | "[" "..." "]" ElementType |
+                SliceType | MapType | TypeName .
+LiteralValue  = "{" [ ElementList [ "," ] ] "}" .
+ElementList   = Element { "," Element } .
+Element       = [ Key ":" ] Value .
+Key           = FieldName | ElementIndex .
+FieldName     = identifier .
+ElementIndex  = Expression .
+Value         = Expression | LiteralValue .
+FunctionLit = "func" Function .
+PrimaryExpr =
+	Operand |
+	Conversion |
+	PrimaryExpr Selector |
+	PrimaryExpr Index |
+	PrimaryExpr Slice |
+	PrimaryExpr TypeAssertion |
+	PrimaryExpr Arguments .
+Selector       = "." identifier .
+Index          = "[" Expression "]" .
+Slice          = "[" ( [ Expression ] ":" [ Expression ] ) |
+                     ( [ Expression ] ":" Expression ":" Expression )
+                 "]" .
+TypeAssertion  = "." "(" Type ")" .
+Arguments      = "(" [ ( ExpressionList | Type [ "," ExpressionList ] ) [ "..." ] [ "," ] ] ")" .
+MethodExpr    = ReceiverType "." MethodName .
+ReceiverType  = TypeName | "(" "*" TypeName ")" | "(" ReceiverType ")" .
+Expression = UnaryExpr | Expression binary_op UnaryExpr .
+UnaryExpr  = PrimaryExpr | unary_op UnaryExpr .
+binary_op  = "||" | "&&" | rel_op | add_op | mul_op .
+rel_op     = "==" | "!=" | "<" | "<=" | ">" | ">=" .
+add_op     = "+" | "-" | "|" | "^" .
+mul_op     = "*" | "/" | "%" | "<<" | ">>" | "&" | "&^" .
+unary_op   = "+" | "-" | "!" | "^" | "*" | "&" | "<-" .
+Conversion = Type "(" Expression [ "," ] ")" .
+Statement =
+	Declaration | LabeledStmt | SimpleStmt |
+	GoStmt | ReturnStmt | BreakStmt | ContinueStmt | GotoStmt |
+	FallthroughStmt | Block | IfStmt | SwitchStmt | SelectStmt | ForStmt |
+	DeferStmt .
+SimpleStmt = EmptyStmt | ExpressionStmt | SendStmt | IncDecStmt | Assignment | ShortVarDecl .
+EmptyStmt = .
+LabeledStmt = Label ":" Statement .
+Label       = identifier .
+ExpressionStmt = Expression .
+SendStmt = Channel "<-" Expression .
+Channel  = Expression .
+IncDecStmt = Expression ( "++" | "--" ) .
+Assignment = ExpressionList assign_op ExpressionList .
+assign_op = [ add_op | mul_op ] "=" .
+IfStmt = "if" [ SimpleStmt ";" ] Expression Block [ "else" ( IfStmt | Block ) ] .
+SwitchStmt = ExprSwitchStmt | TypeSwitchStmt .
+ExprSwitchStmt = "switch" [ SimpleStmt ";" ] [ Expression ] "{" { ExprCaseClause } "}" .
+ExprCaseClause = ExprSwitchCase ":" StatementList .
+ExprSwitchCase = "case" ExpressionList | "default" .
+TypeSwitchStmt  = "switch" [ SimpleStmt ";" ] TypeSwitchGuard "{" { TypeCaseClause } "}" .
+TypeSwitchGuard = [ identifier ":=" ] PrimaryExpr "." "(" "type" ")" .
+TypeCaseClause  = TypeSwitchCase ":" StatementList .
+TypeSwitchCase  = "case" TypeList | "default" .
+TypeList        = Type { "," Type } .
+ForStmt = "for" [ Condition | ForClause | RangeClause ] Block .
+Condition = Expression .
+ForClause = [ InitStmt ] ";" [ Condition ] ";" [ PostStmt ] .
+InitStmt = SimpleStmt .
+PostStmt = SimpleStmt .
+RangeClause = [ ExpressionList "=" | IdentifierList ":=" ] "range" Expression .
+GoStmt = "go" Expression .
+SelectStmt = "select" "{" { CommClause } "}" .
+CommClause = CommCase ":" StatementList .
+CommCase   = "case" ( SendStmt | RecvStmt ) | "default" .
+RecvStmt   = [ ExpressionList "=" | IdentifierList ":=" ] RecvExpr .
+RecvExpr   = Expression .
+ReturnStmt = "return" [ ExpressionList ] .
+BreakStmt = "break" [ Label ] .
+ContinueStmt = "continue" [ Label ] .
+GotoStmt = "goto" Label .
+FallthroughStmt = "fallthrough" .
+DeferStmt = "defer" Expression .
+SourceFile       = PackageClause ";" { ImportDecl ";" } { TopLevelDecl ";" } .
+PackageClause  = "package" PackageName .
+PackageName    = identifier .
+ImportDecl       = "import" ( ImportSpec | "(" { ImportSpec ";" } ")" ) .
+ImportSpec       = [ "." | PackageName ] ImportPath .
+ImportPath       = string_lit .

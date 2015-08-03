@@ -1,9 +1,3 @@
-TODO
-----
- - Add CR license.
- - Reach out to Go mailing list; mention weird issues with random
-   productions of Go grammar.
-
 `rebnf` is a tool to generate random productions of arbitrary EBNF
 grammars.
 

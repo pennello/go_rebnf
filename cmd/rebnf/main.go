@@ -54,6 +54,7 @@
 //	  -padding=" ":   non-terminal padding characters
 //	  -seed=-1:       random seed
 //	  -start="Start": name of start production
+//	  -debug=false:   grammar traversal debug output
 //
 package main
 
@@ -78,6 +79,7 @@ var args struct {
 	maxreps  int
 	maxdepth int
 	padding  string
+	debug    bool
 }
 
 func init() {
@@ -88,7 +90,7 @@ func init() {
 	maxreps  := flag.Int("maxreps", 100, "maximum number of repetitions")
 	maxdepth := flag.Int("maxdepth", 30, "maximum recursion depth")
 	padding  := flag.String("padding", " ", "non-terminal padding characters")
-
+        debug    := flag.Bool("debug", false, "grammar traversal debug output")
 	flag.Parse()
 
 	args.prog     = os.Args[0]
@@ -97,6 +99,7 @@ func init() {
 	args.maxreps  = *maxreps
 	args.maxdepth = *maxdepth
 	args.padding  = *padding
+	args.debug    = *debug
 
 	if args.seed == -1 {
 		args.seed = time.Now().UTC().UnixNano()
@@ -135,7 +138,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	ctx := rebnf.NewCtx(args.maxreps, args.maxdepth, args.padding)
+	ctx := rebnf.NewCtx(args.maxreps, args.maxdepth, args.padding, args.debug)
 	log.Printf("seed %d", args.seed)
 	err = ctx.Random(os.Stdout, grammar, args.start)
 	if err != nil {

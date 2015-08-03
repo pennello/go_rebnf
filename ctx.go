@@ -9,6 +9,7 @@ type Ctx struct {
 	maxreps  int
 	maxdepth int
 	padding  string
+	debug    bool
 }
 
 // NewCtx creates a new Ctx, ready to make Random calls.  Pass in two
@@ -27,10 +28,16 @@ type Ctx struct {
 //
 // Finally, pass in a string of characters to pad non-terminal
 // productions with.  The string may be empty to disable such padding.
-func NewCtx(maxRepetitions, maxRecursionDepth int, padding string) *Ctx {
+//
+// There is also a boolean to disable or enable debug output.  This can
+// be helpful if you don't understand why the algorithm is making the
+// grammar traversals that it is.  When debug is on, the algorithm will
+// output what ebnf.Expressions it traverses on standard error.
+func NewCtx(maxRepetitions, maxRecursionDepth int, padding string, debug bool) *Ctx {
 	return &Ctx{
 		maxreps:  maxRecursionDepth,
 		maxdepth: maxRecursionDepth,
 		padding:  padding,
+		debug:    debug,
 	}
 }

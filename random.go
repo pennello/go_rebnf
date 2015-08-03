@@ -4,7 +4,9 @@ package rebnf
 
 import (
 	"errors"
+	"fmt"
 	"io"
+	"log"
 	"unicode"
 
 	mathrand "math/rand"
@@ -82,6 +84,14 @@ func (c *Ctx) pad(dst io.Writer) error {
 	return err
 }
 
+func (c *Ctx) log(format string, a ...interface{}) {
+	if !c.debug {
+		return
+	}
+	// Logging errors ignored.
+	log.Printf(format, a...)
+}
+
 // random is the inner, recursive implementation of Random.  It handles
 // each of the ebnf.Expression implementations, outputting productions
 // randomly to the destination writer.  It implements a recursion depth
@@ -90,6 +100,9 @@ func (c *Ctx) pad(dst io.Writer) error {
 // termination, however.  For example, the pathological grammar "S = S"
 // will still loop forever.
 func (c *Ctx) random(dst io.Writer, grammar ebnf.Grammar, expr ebnf.Expression, depth int) error {
+	c.log("recursion depth %d\n", depth)
+	c.log("%#v\n\n", expr)
+
 	switch expr.(type) {
 	// Choose a random alternative.
 	case ebnf.Alternative:
@@ -99,10 +112,12 @@ func (c *Ctx) random(dst io.Writer, grammar ebnf.Grammar, expr ebnf.Expression, 
 		// to select from only terminal expressions.
 		if depth > c.maxdepth {
 			exprs = findTerminals(alt)
+			c.log("alternative: found %d terminals", len(exprs))
 			if len(exprs) == 0 {
 				// No luck, we have no choice but to
 				// explore one of the non-terminals in
 				// this alternative.
+				c.log("alternative: no terminals\n")
 				exprs = alt
 			}
 		} else {
@@ -144,6 +159,7 @@ func (c *Ctx) random(dst io.Writer, grammar ebnf.Grammar, expr ebnf.Expression, 
 		// non-termainl, unconditionally omit.
 		if depth > c.maxdepth && !IsTerminal(opt.Body) {
 			// Omit.
+			c.log("option: non-terminal omitted due to having exceeded recursion depth limit\n")
 		} else if fixrand.Bool() {
 			// Otherwise, proceed with usual random
 			// inclusion of option.
@@ -179,10 +195,13 @@ func (c *Ctx) random(dst io.Writer, grammar ebnf.Grammar, expr ebnf.Expression, 
 		// repetition is non-terminal, unconditionally omit it.
 		if depth > c.maxdepth && !IsTerminal(rep.Body) {
 			// Omit.
+			c.log("repetition: non-terminal omitted due to having exceeded recursion depth limit\n")
 		} else {
 			// Otherwise, do normal inclusion of a random
 			// number of repetitions.
-			for i := 0; i < mathrand.Intn(c.maxreps+1); i++ {
+			reps := mathrand.Intn(c.maxreps + 1)
+			c.log("repetition: chose %d repetitions\n", reps)
+			for i := 0; i < reps; i++ {
 				err := c.random(dst, grammar, rep.Body, depth+1)
 				if err != nil {
 					return err

@@ -46,6 +46,9 @@
 // may specify any string of padding characters for the algorithm to
 // randomly choose from.
 //
+// You may optionally enable debug output to help understand the
+// traversal the algorithm is making through your grammar.
+//
 // Usage is as follows.
 //
 //	rebnf [-h] [options] [grammarfile]

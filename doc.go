@@ -38,6 +38,10 @@
 // arguments you must specify when creating a context.  A reasonable
 // value is 30.
 //
+// Several other context parameters include a whitespace padding feature
+// for non-terminals and debug output.  See the Ctx documentation for
+// more details.
+//
 // Pass the grammar and the name of the start production into Random, a
 // function defined on contexts.  The output instance of the language
 // will be written to the given destination writer.

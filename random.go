@@ -123,7 +123,6 @@ func (c *Ctx) random(dst io.Writer, grammar ebnf.Grammar, expr ebnf.Expression, 
 				// No luck, we have no choice but to
 				// explore one of the non-terminals in
 				// this alternative.
-				c.log("alternative: no terminals\n")
 				exprs = alt
 			}
 		} else {

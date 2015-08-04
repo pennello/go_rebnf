@@ -48,3 +48,37 @@ func TestIsTerminal(t *testing.T) {
 	expr = &ebnf.Repetition{Body: &ebnf.Token{String: "foo"}}
 	testIsTerminal(t, expr, false)
 }
+
+func sliceExprEquals(a, b []ebnf.Expression) bool {
+	if len(a) != len(b) {
+		return false
+	}
+	for i, _ := range a {
+		if a[i] != b[i] {
+			return false
+		}
+	}
+	return true
+}
+
+func testFindTerminals(t *testing.T, x []ebnf.Expression, expect []ebnf.Expression) {
+	x = findTerminals(x)
+	if !sliceExprEquals(x, expect) {
+		t.Fail()
+	}
+}
+
+func TestFindTerminals(t *testing.T) {
+	var term ebnf.Expression
+	var x, expect []ebnf.Expression
+
+	term = &ebnf.Name{String: "some_terminal"}
+
+	x = []ebnf.Expression{
+		term,
+		&ebnf.Name{String: "NonTerminal"},
+		&ebnf.Option{Body: &ebnf.Name{String: "whatever"}},
+	}
+	expect = []ebnf.Expression{term}
+	testFindTerminals(t, x, expect)
+}

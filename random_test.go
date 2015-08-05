@@ -9,8 +9,9 @@ import (
 )
 
 func testIsCapital(t *testing.T, x string, expect bool) {
-	if IsCapital(x) != expect {
-		t.Fail()
+	out := IsCapital(x)
+	if out != expect {
+		t.Errorf("IsCapital(%q) != %v (got %v)", x, out, expect)
 	}
 }
 
@@ -22,8 +23,9 @@ func TestIsCapital(t *testing.T) {
 }
 
 func testIsTerminal(t *testing.T, expr ebnf.Expression, expect bool) {
-	if IsTerminal(expr) != expect {
-		t.Fail()
+	out := IsTerminal(expr)
+	if out != expect {
+		t.Errorf("IsTerminal(%#v) != %v (got %v)", expr, out, expect)
 	}
 }
 
@@ -62,9 +64,9 @@ func sliceExprEquals(a, b []ebnf.Expression) bool {
 }
 
 func testFindTerminals(t *testing.T, x []ebnf.Expression, expect []ebnf.Expression) {
-	x = findTerminals(x)
-	if !sliceExprEquals(x, expect) {
-		t.Fail()
+	out := findTerminals(x)
+	if !sliceExprEquals(out, expect) {
+		t.Errorf("findTerminals(%#v) != %#v (got %#v)", x, expect, out)
 	}
 }
 

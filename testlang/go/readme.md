@@ -10,3 +10,6 @@
 
 - `.unicode`: Naïve implementation of commented Unicode character
   productions.
+
+- `.restrict`: Restrictions on several classes of grammar productions to
+  more reliably produce `gofmt`-able output.

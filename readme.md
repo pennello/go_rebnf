@@ -20,6 +20,9 @@ including one in which the Unicode productions have been defined.
 
 Future Work
 -----------
+ - More reliable termination soon after recursion depth limit exceeded.
+   More reliable terminal path analysis.  Graph analysis of grammar
+   productions.
  - Non-uniform production weighting.
  - Mode to prefer non-weird characters (e.g., put it in "ASCII mode").
 

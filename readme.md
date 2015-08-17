@@ -3,7 +3,7 @@ grammars.
 
 Documentation
 -------------
- - [GoDoc Documentation](https://godoc.org/chrispennello.com/go/rebnf)
+ - [GoDoc Documentation](https://godoc.org/github.com/crunchyroll/rebnf)
 
 Tools
 -----

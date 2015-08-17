@@ -22,7 +22,7 @@ import (
 
 	"io/ioutil"
 
-	"chrispennello.com/go/rebnf"
+	"github.com/crunchyroll/rebnf"
 )
 
 var args struct {
